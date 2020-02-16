@@ -8,10 +8,12 @@ const router = express.Router();
 const data = require('../assets/data/dataset.json')
 // const Document = require('../models/Document')
 
-const { createWorker } = require("tesseract.js");
-const worker = createWorker({
-    logger: m => console.log(m)
-});
+// const { createWorker } = require("tesseract.js");
+// const worker = createWorker({
+//     logger: m => console.log(m)
+// });
+
+const Tesseract = require('tesseract.js')
 
 var whichDoc = bayes();
 
@@ -30,37 +32,44 @@ const upload = multer({ storage: storage }).single('file')
 //     dest: './uploads/'
 // })
 
-router.post('/classify', async (req, res) => {
-    try {
-        upload(req, res, err => {
-            //res.json({ file: req.file })
+router.post('/classify', (req, res) => {
+    upload(req, res, err => {
+        //res.json({ file: req.file })
 
-            fs.readFile(`./uploads/${req.file.originalname}`, async (err, file) => {
-                if (err) return console.log(err)
-                try {
-                    //Use Tesseractjs
-                    await worker.load();
-                    await worker.loadLanguage('eng');
-                    await worker.initialize('eng');
-                    const { data: { text } } = await worker.recognize(file);
+        fs.readFile(`./uploads/${req.file.originalname}`, (err, image) => {
+            if (err) return console.log(err)
+
+            // (async () => {
+            //     //Use Tesseractjs
+            //     await worker.load();
+            //     await worker.loadLanguage('eng');
+            //     await worker.initialize('eng');
+            //     const { data: { text } } = await worker.recognize(image);
+            //     console.log(text)
+            //     await worker.terminate()
+
+            //     // for (var i = 0; i < data.doc.length; i++) {
+            //     //     await whichDoc.learn(data.doc[i].description, data.doc[i].label)
+            //     // }
+            //     // let documentType = await whichDoc.categorize(text)
+            //     // console.log(documentType)
+            //     // res.status(201).send(documentType)
+            // })();
+
+            Tesseract.recognize(image, 'eng', { logger: m => console.log(m) })
+                .then(async ({ data: { text } }) => {
                     console.log(text)
-                    await worker.terminate()
                     for (var i = 0; i < data.doc.length; i++) {
                         await whichDoc.learn(data.doc[i].description, data.doc[i].label)
                     }
                     let documentType = await whichDoc.categorize(text)
                     console.log(documentType)
-                    return res.status(201).send(documentType)
-                } catch (e) {
-                    console.log(e)
-                }
-
-            })
+                })
 
         })
-    } catch (e) {
-        console.log(e)
-    }
+
+
+    })
 })
 
 module.exports = router
