@@ -102,6 +102,72 @@
       </div>
     </div>
 
+    <div
+      class="modal fade"
+      id="updateUser"
+      ref="updateUser"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addUserModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateModalLongTitle">Update User/Admin</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" v-model="name" />
+              </div>
+              <div class="form-group">
+                <label for="employeeno">Employee No.</label>
+                <input type="text" class="form-control" id="employeeno" v-model="employeeno" />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" v-model="password" />
+              </div>
+              <div class="form-group">
+                <label for="selectCollege">College</label>
+                <select class="form-control" id="selectCollege" v-model="college">
+                  <option selected>COF</option>
+                  <option>CAS</option>
+                  <option>CCS</option>
+                  <option>CTE</option>
+                  <option>CHMT</option>
+                  <option>CFND</option>
+                  <option>CBMA</option>
+                  <option>CCJE</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="score">Total Score</label>
+                <input type="text" class="form-control" id="score" v-model="totalScore" />
+              </div>
+              <div class="form-group">
+                <label for="userType">Type</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="userType" v-model="isAdmin" />
+                  <label class="form-check-label" for="userType">Administrator</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-dark" @click="updateUser">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLES -->
     <div id="accordion" style="padding-bottom: 2rem">
       <div class="container-fluid my-5">
         <!-- College of Fisheries Table -->
@@ -143,24 +209,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Rosalina V. Bunal</th>
-                    <td>20131456</td>
-                    <td>96</td>
-                    <td>Professor 6</td>
+                  <tr v-for="(cofs, index) in usersCof" :key="cofs._id">
+                    <th scope="row">{{cofs.name}}</th>
+                    <td>{{cofs.employeeID}}</td>
+                    <td>{{cofs.totalScore}}</td>
+                    <td>{{cofs.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Daniel D. Bunal</th>
-                    <td>20147839</td>
-                    <td>96</td>
-                    <td>Professor 5</td>
-                    <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button
+                        class="btn btn-dark mr-1"
+                        data-toggle="modal"
+                        data-target="#updateUser"
+                      >Edit</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, cofs.college)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -208,24 +271,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Myrna O.Medrano</th>
-                    <td>20163248</td>
-                    <td>94</td>
-                    <td>Associate Prof. 6</td>
+                  <tr v-for="(cass, index) in usersCas" :key="cass._id">
+                    <th scope="row">{{cass.name}}</th>
+                    <td>{{cass.employeeID}}</td>
+                    <td>{{cass.totalScore}}</td>
+                    <td>{{cass.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Jaime A. Mulimbayan</th>
-                    <td>20151272</td>
-                    <td>86</td>
-                    <td>Assitant Prof. 2</td>
-                    <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, cass.college)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -268,8 +324,22 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee No.</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="csss in usersCcs" :key="csss.id">
+                    <th scope="row">{{csss.name}}</th>
+                    <td>{{csss.employeeID}}</td>
+                    <td>{{csss.totalScore}}</td>
+                    <td>{{csss.position}}</td>
+                    <td>
+                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-danger ml-1">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -309,8 +379,22 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee No.</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="ctes in usersCte" :key="ctes.id">
+                    <th scope="row">{{ctes.name}}</th>
+                    <td>{{ctes.employeeID}}</td>
+                    <td>{{ctes.totalScore}}</td>
+                    <td>{{ctes.position}}</td>
+                    <td>
+                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-danger ml-1">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -339,7 +423,7 @@
           </div>
           <div
             class="collapse"
-            id="colOfTeacher"
+            id="colOfTourism"
             aria-labelledby="collegeOfHMandTourism"
             data-parent="#accordion"
           >
@@ -350,8 +434,22 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee No.</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="chmts in usersChmt" :key="chmts.id">
+                    <th scope="row">{{chmts.name}}</th>
+                    <td>{{chmts.employeeID}}</td>
+                    <td>{{chmts.totalScore}}</td>
+                    <td>{{chmts.position}}</td>
+                    <td>
+                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-danger ml-1">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -391,8 +489,22 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee No.</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="cfnds in usersCfnd" :key="cfnds.id">
+                    <th scope="row">{{cfnds.name}}</th>
+                    <td>{{cfnds.employeeID}}</td>
+                    <td>{{cfnds.totalScore}}</td>
+                    <td>{{cfnds.position}}</td>
+                    <td>
+                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-danger ml-1">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -432,8 +544,22 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee No.</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="cbmas in usersCbma" :key="cbmas.id">
+                    <th scope="row">{{cbmas.name}}</th>
+                    <td>{{cbmas.employeeID}}</td>
+                    <td>{{cbmas.totalScore}}</td>
+                    <td>{{cbmas.position}}</td>
+                    <td>
+                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-danger ml-1">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -473,8 +599,22 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee No.</th>
                     <th scope="col">Score</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="ccjes in usersCcje" :key="ccjes.id">
+                    <th scope="row">{{ccjes.name}}</th>
+                    <td>{{ccjes.employeeID}}</td>
+                    <td>{{ccjes.totalScore}}</td>
+                    <td>{{ccjes.position}}</td>
+                    <td>
+                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-danger ml-1">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -494,7 +634,16 @@ export default {
       employeeno: "",
       password: "",
       college: "",
-      isAdmin: false
+      isAdmin: false,
+      totalScore: 0,
+      usersCof: [],
+      usersCas: [],
+      usersCcs: [],
+      usersCte: [],
+      usersChmt: [],
+      usersCfnd: [],
+      usersCbma: [],
+      usersCcje: []
     };
   },
   methods: {
@@ -522,6 +671,23 @@ export default {
               duration: 3000
             }
           );
+          if (this.college == "COF") {
+            this.usersCof.push(response.data.user);
+          } else if (this.college == "CAS") {
+            this.usersCas.push(response.data.user);
+          } else if (this.college == "CCS") {
+            this.usersCcs.push(response.data.user);
+          } else if (this.college == "CTE") {
+            this.usersCte.push(response.data.user);
+          } else if (this.college == "CHMT") {
+            this.usersChmt.push(response.data.user);
+          } else if (this.college == "CFND") {
+            this.usersCfnd.push(response.data.user);
+          } else if (this.college == "CBMA") {
+            this.usersCbma.push(response.data.user);
+          } else {
+            this.usersCcje.push(response.data.user);
+          }
         })
         .catch(() => {
           this.$toasted.show(
@@ -530,7 +696,123 @@ export default {
         });
 
       $("#addUser").modal("hide");
+    },
+
+    getUsersCof() {
+      let uri = "http://localhost:3000/users/cof";
+      this.$http.get(uri).then(response => {
+        this.usersCof = response.data.users;
+      });
+    },
+
+    getUsersCas() {
+      let uri = "http://localhost:3000/users/cas";
+      this.$http.get(uri).then(response => {
+        this.usersCas = response.data.users;
+      });
+    },
+
+    getUsersCcs() {
+      let uri = "http://localhost:3000/users/ccs";
+      this.$http.get(uri).then(response => {
+        this.usersCcs = response.data.users;
+      });
+    },
+
+    getUsersCte() {
+      let uri = "http://localhost:3000/users/cte";
+      this.$http.get(uri).then(response => {
+        this.usersCte = response.data.users;
+      });
+    },
+
+    getUsersChmt() {
+      let uri = "http://localhost:3000/users/chmt";
+      this.$http.get(uri).then(response => {
+        this.usersChmt = response.data.users;
+      });
+    },
+
+    getUsersCfnd() {
+      let uri = "http://localhost:3000/users/cfnd";
+      this.$http.get(uri).then(response => {
+        this.usersCfnd = response.data.users;
+      });
+    },
+
+    getUsersCbma() {
+      let uri = "http://localhost:3000/users/cbma";
+      this.$http.get(uri).then(response => {
+        this.usersCbma = response.data.users;
+      });
+    },
+
+    getUsersCcje() {
+      let uri = "http://localhost:3000/users/ccje";
+      this.$http.get(uri).then(response => {
+        this.usersCcje = response.data.users;
+      });
+    },
+
+    removeUser(index, col) {
+      let uri = "http://localhost:3000/user/remove";
+      this.$http
+        .post(uri)
+        .then(() => {
+          if (col == "COF") {
+            this.usersCof.splice(index, 1);
+          } else if (col == "CAS") {
+            this.usersCas.splice(index, 1);
+          } else if (col == "CCS") {
+            this.usersCcs.splice(index, 1);
+          } else if (col == "CTE") {
+            this.usersCte.splice(index, 1);
+          } else if (col == "CHMT") {
+            this.usersChmt.splice(index, 1);
+          } else if (col == "CFND") {
+            this.usersCfnd.splice(index, 1);
+          } else if (col == "CBMA") {
+            this.usersCbma.splice(index, 1);
+          } else {
+            this.usersCcje.splice(index, 1);
+          }
+          this.$toasted.show("User has been deleted!", {
+            duration: 3000
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    updateUser() {
+      let uri = "http://localhost:3000/user/:id";
+      this.$http
+        .post(uri, {
+          name: this.name,
+          employeeID: this.employeeno,
+          password: this.password,
+          totalScore: this.totalScore,
+          isAdmin: this.isAdmin
+        })
+        .then(() => {
+          this.$toasted.show("User");
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
+  },
+
+  mounted() {
+    this.getUsersCof();
+    this.getUsersCas();
+    this.getUsersCcs();
+    this.getUsersCte();
+    this.getUsersChmt();
+    this.getUsersCfnd();
+    this.getUsersCbma();
+    this.getUsersCcje();
   }
 };
 </script>

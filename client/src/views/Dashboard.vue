@@ -23,12 +23,12 @@
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container row col-12">
       <div class="card" style="width: 20rem;">
         <div class="card-header">
-          <h3>
+          <h4>
             <strong>My Rank</strong>
-          </h3>
+          </h4>
         </div>
         <div class="card-body">
           <h5>
@@ -40,6 +40,19 @@
             data-toggle="modal"
             data-target="#addDocumentModal"
           >Upload Document</button>
+        </div>
+      </div>
+
+      <div class="card" style="width: 20rem">
+        <div class="card-header">
+          <h4>
+            <strong>Needed Pts to Rank Up</strong>
+          </h4>
+        </div>
+        <div class="card-body">
+          <h2>
+            <strong>54</strong>
+          </h2>
         </div>
       </div>
     </div>
@@ -63,20 +76,21 @@
           </div>
           <form @submit.prevent="classifyFile" enctype="multipart/form-data">
             <div class="modal-body">
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="exampleFormControlFile1">Upload File to Classify</label>
                 <input
                   type="file"
                   class="form-control-file"
-                  id="fileToClassify"
-                  ref="fileToClassify"
+                  name="file"
+                  ref="file"
                   @change="selectFile"
                 />
-              </div>
+              </div>-->
+              <input type="file" ref="file" name="file" @change="selectFile" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-dark">Save changes</button>
+              <button type="submit" class="btn btn-dark">Submit & Classify</button>
             </div>
           </form>
         </div>
@@ -134,7 +148,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      imageFile: ""
+    };
   },
   methods: {
     logout() {
@@ -142,6 +158,24 @@ export default {
       localStorage.removeItem("jwt");
 
       this.$router.push("/");
+    },
+
+    selectFile() {
+      const file = this.$refs.file.files[0];
+      this.imageFile = file;
+    },
+
+    async classifyFile() {
+      const uri = "http://localhost:3000/classify";
+
+      const formData = new FormData();
+      formData.append("file", this.imageFile);
+
+      try {
+        await this.$http.post(uri, formData);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 };

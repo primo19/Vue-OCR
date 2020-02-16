@@ -56,33 +56,137 @@ router.post('/adduser', async (req, res) => {
     }
 })
 
-router.get('/users/me', auth, async (req, res) => {
-    // View logged in user profile
-    res.send(req.user)
+router.get('/users/cof', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "COF" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
-router.post('/users/me/logout', auth, async (req, res) => {
-    // Log user out of the application
+router.get('/users/cas', async (req, res) => {
+    // View All Users
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token != req.token
+        let users = await User.find({ college: "CAS" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/users/ccs', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "CCS" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/users/cte', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "CTE" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/users/chmt', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "CHMT" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+router.get('/users/cfnd', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "CFND" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/users/cbma', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "CBMA" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/users/ccje', async (req, res) => {
+    // View All Users
+    try {
+        let users = await User.find({ college: "CCJE" })
+
+        res.status(201).send({ users })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.post('/user/remove', async (req, res) => {
+    try {
+        User.deleteOne((err, obj) => {
+            if (err) throw err;
+            res.status(201).send('Deleted Successfully')
         })
-        await req.user.save()
-        res.send()
-    } catch (error) {
-        res.status(500).send(error)
+    } catch (e) {
+        res.status(400).send(e)
     }
 })
 
-router.post('/users/me/logoutall', auth, async (req, res) => {
-    // Log user out of all devices
+router.put('/user/:id', async (req, res) => {
     try {
-        req.user.tokens.splice(0, req.user.tokens.length)
-        await req.user.save()
-        res.send()
-    } catch (error) {
-        res.status(500).send(error)
+        User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
+            if (err) return next(err)
+            user.save();
+            res.status(201).send('User updated successfully')
+        })
+    } catch (e) {
+        res.status(400).send(e)
     }
 })
+// router.post('/users/me/logout', auth, async (req, res) => {
+//     // Log user out of the application
+//     try {
+//         req.user.tokens = req.user.tokens.filter((token) => {
+//             return token.token != req.token
+//         })
+//         await req.user.save()
+//         res.send()
+//     } catch (error) {
+//         res.status(500).send(error)
+//     }
+// })
+
+// router.post('/users/me/logoutall', auth, async (req, res) => {
+//     // Log user out of all devices
+//     try {
+//         req.user.tokens.splice(0, req.user.tokens.length)
+//         await req.user.save()
+//         res.send()
+//     } catch (error) {
+//         res.status(500).send(error)
+//     }
+// })
 
 module.exports = router

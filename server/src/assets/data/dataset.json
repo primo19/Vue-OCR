@@ -1,0 +1,1104 @@
+{
+    "doc": [
+        {
+            "label": "servicerecord",
+            "description": "this is to certify that, was employed as "
+        },
+        {
+            "label": "servicerecord",
+            "description": "year of entry"
+        },
+        {
+            "label": "servicerecord",
+            "description": "subject handled"
+        },
+        {
+            "label": "servicerecord",
+            "description": "year level"
+        },
+        {
+            "label": "servicerecord",
+            "description": "status of employment"
+        },
+        {
+            "label": "servicerecord",
+            "description": "this is to certify that the name herein above actually rendered services, supported by appointment and other papers"
+        },
+        {
+            "label": "servicerecord",
+            "description": "name, social security number, signature of teacher"
+        },
+        {
+            "label": "servicerecord",
+            "description": "teacher service record, service record , rendered service"
+        },
+        {
+            "label": "servicerecord",
+            "description": "service, from, to, inclusive date"
+        },
+        {
+            "label": "servicerecord",
+            "description": "record of appointment,designation, status, salary"
+        },
+        {
+            "label": "servicerecord",
+            "description": "office entity, office entry, division"
+        },
+        {
+            "label": "servicerecord",
+            "description": "station/place of assignment, branch"
+        },
+        {
+            "label": "servicerecord",
+            "description": "leave of absence w/o pay"
+        },
+        {
+            "label": "servicerecord",
+            "description": "separation date caused"
+        },
+        {
+            "label": "servicerecord",
+            "description": "school year"
+        },
+        {
+            "label": "servicerecord",
+            "description": "state or country"
+        },
+        {
+            "label": "servicerecord",
+            "description": "county or equivalent"
+        },
+        {
+            "label": "servicerecord",
+            "description": "school district or institution"
+        },
+        {
+            "label": "servicerecord",
+            "description": "% of day employed"
+        },
+        {
+            "label": "servicerecord",
+            "description": "school grade(s) taught"
+        },
+        {
+            "label": "servicerecord",
+            "description": "no. of days employed"
+        },
+        {
+            "label": "servicerecord",
+            "description": "only authorized signature accepted"
+        },
+        {
+            "label": "servicerecord",
+            "description": "state sick leave program, state personal leave program"
+        },
+        {
+            "label": "servicerecord",
+            "description": "prior year balance, earned, used, end-of-year balance"
+        },
+        {
+            "label": "servicerecord",
+            "description": "authorized signature, title, organization official stamp "
+        },
+        {
+            "label": "patentcertificate",
+            "description": "patent no."
+        },
+        {
+            "label": "patentcertificate",
+            "description": "letter patent, innovation, invention"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "bureau of patents"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "republic act. no. 8293 "
+        },
+        {
+            "label": "patentcertificate",
+            "description": "director of patent"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "patent, grant of patent"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "certificate of grant of patent"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "letter patent shall be twenty (20) years"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "we the undersigned do hereby present, for their certificate of grant of patent"
+        },
+        {
+            "label": "patentcertificate",
+            "description": "this is to certify that, in accordance with, a patent has been granted to"
+        },
+        {
+            "label": "utilitymodelcertificate",
+            "description": "having complied with the provision of law and regulations"
+        },
+        {
+            "label": "utilitymodelcertificate",
+            "description": "registration no."
+        },
+        {
+            "label": "utilitymodelcertificate",
+            "description": "utility model certificate"
+        },
+        {
+            "label": "utilitymodelcertificate",
+            "description": "utility model"
+        },
+        {
+            "label": "utilitymodelcertificate",
+            "description": "registration"
+        },
+        {
+            "label": "utilitymodelcertificate",
+            "description": "registration shall be seven (7) years"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is proudly presented to, for having successfully completed all the requirements"
+        },
+        {
+            "label": "certificate",
+            "description": "this certifies that, has completed the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is awarded to, for successfully completing the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certify that, has successfully completed"
+        },
+        {
+            "label": "certificate",
+            "description": "is hereby presented to, for participating in the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is issued to, for having successfully completed the training"
+        },
+        {
+            "label": "certificate",
+            "description": "this  is to certify that, has attended the training course for"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of training to, for having successfully completed the training on"
+        },
+        {
+            "label": "certificate",
+            "description": "certificate of completion, has successfully completed"
+        },
+        {
+            "label": "certificate",
+            "description": "this award certifies that has comepleted the training"
+        },
+        {
+            "label": "certificate ",
+            "description": "is granted to, for successfully completing the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is given to, for attending the lecture discussion in"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of attendance is awarded to, in recognition of his/her valuable participation in, "
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of attendance to, for having participated in the"
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of attendance to, for his/her active participation in"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of attendance is presented to, for having completed the"
+        },
+        {
+            "label": "certificate",
+            "description": "award this certificate of attendance to, for having completed the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certifies that, successfully completed"
+        },
+        {
+            "label": "certificate",
+            "description": "this acknowledge that, has attended the"
+        },
+        {
+            "label": "certificate",
+            "description": "this is to certify that, have successfully completed the"
+        },
+        {
+            "label": "certificate",
+            "description": "this document certifies that, successfully participated in a"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is proudly presented to, for attending and successfully completing"
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of attendance to, for his attendance and participation on the"
+        },
+        {
+            "label": "certificate",
+            "description": "certificate of attendance is given to, as participant in"
+        },
+        {
+            "label": "certificate",
+            "description": "this is to certify that, was given a"
+        },
+        {
+            "label": "certificate",
+            "description": "awarded to, for attending the"
+        },
+        {
+            "label": "certificate",
+            "description": "is hereby presented to, for participating in the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of appreciation is presented to, for serving as"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is awarded to, for imparting his valuable insights and inspirations"
+        },
+        {
+            "label": "certificate",
+            "description": "certificate of appreciation presented to, in grateful appreciation of his invaluable support"
+        },
+        {
+            "label": "certificate",
+            "description": "certificate of appreciation presented to, for his invaluable effort to uplift"
+        },
+        {
+            "label": "certificate",
+            "description": "certificate of appreciation presented to, in grateful acknowledgement of his unselfish sharing of time and expertise as"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of appreciation is hereby awarded to, as our esteemed tribute and valued appreciation in her exemplary efforts"
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of appreciation to, in deep recognition of and sincere gratitude for"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of recognition is given to, for having served as"
+        },
+        {
+            "label": "certificate",
+            "description": "is given to, in grateful for unwaivering support"
+        },
+        {
+            "label": "certificate",
+            "description": "is awarded to, for the generous support extended during"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is awarded to, for imparting his valuable insights and inspirations to"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of appreciation to, In grateful appreciation of their unselfish and solid support to"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of appreciation to, for their invaluable partnership and unwavering support to"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of appreciation is hereby awarded to, for her invaluable insights "
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of appreciation to, for this invaluable contribution as"
+        },
+        {
+            "label": "certificate",
+            "description": "is presented to, in sincere appreciation for thjs valuable contribution as"
+        },
+        {
+            "label": "certificate",
+            "description": "is hereby awarded to, for having organized and put together"
+        },
+        {
+            "label": "certificate",
+            "description": "is given to, for her invaluable contribution as a member of jury"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is presented to, in recognition for a record of"
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of appreciation to, for having participated as"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of appreciation to, for generously sharing his valuable knowledge experience and insite on"
+        },
+        {
+            "label": "certificate",
+            "description": "this awards goes to, for"
+        },
+        {
+            "label": "certificate",
+            "description": "is hereby presented to, in recognition of your generous volunteer efforts to,"
+        },
+        {
+            "label": "certificate",
+            "description": "in hereby presented to, in recognition of his valuable support as"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is awarded to, for  imparting his knowledge valuable insights to"
+        },
+        {
+            "label": "certificate",
+            "description": "award this certificate of appreciation to, in grateful appreciation for the"
+        },
+        {
+            "label": "certificate",
+            "description": "is awarded to, for being the resource speaker"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of appreciation is presented to, for his time and expertise as"
+        },
+        {
+            "label": "certificate",
+            "description": "is given to, for her vigorous and active participation as"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of recognition to, for having"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of recogntionnis given to, for having served as"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of recognition to, for the invaluable support"
+        },
+        {
+            "label": "certificate",
+            "description": "presented to, in grateful appreciation for grateful appreciation for"
+        },
+        {
+            "label": "certificate",
+            "description": "presents this certificate of recognition to, for his underwavering and dedicated service to"
+        },
+        {
+            "label": "certificate",
+            "description": "presents this certificate of recognition to, in recognition of his successfull completion of"
+        },
+        {
+            "label": "certificate",
+            "description": "is hereby awarded to, for their exemplary, valuable contribution"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of recognition is awarded to  for unwavering support and continued assistance to"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of recognition to, in grateful recognition and commendation for"
+        },
+        {
+            "label": "certificate",
+            "description": "is presented to, for his/her commendable effort and achievement as a student of"
+        },
+        {
+            "label": "certificate",
+            "description": "1st place, for an explementary performance and winning the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of recognition is hereby awarded to, for her untiring support and able leadership"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is awarded to, for successfully passing the"
+        },
+        {
+            "label": "certificate",
+            "description": "is awarded to, in grateful acknowledgement of her distinguished and invaluable service rendered as"
+        },
+        {
+            "label": "certificate",
+            "description": "presented to, for the extraordinary contribution to"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of recognition is given to, for supporting the"
+        },
+        {
+            "label": "certificate",
+            "description": "presents this certificate of recognition to, for his/her academic achievements as"
+        },
+        {
+            "label": "certificate",
+            "description": "is awarded to, for showing admirable attitude"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is awarded to , for sharing inspirational message to"
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of recognition to, for his/her unwavering and dedicated service to"
+        },
+        {
+            "label": "certificate",
+            "description": "present this certificate of participation to, for quality involvement"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate of participation is hereby presented to, for participating in the"
+        },
+        {
+            "label": "certificate",
+            "description": "awards this certificate of participation to, for actively participated in the"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate is presented to, for active participation in the"
+        },
+        {
+            "label": "certificate",
+            "description": "hereby confer this certificate of participation to"
+        },
+        {
+            "label": "certificate",
+            "description": "is awarded this certificate of participation for having attended and participated in the seminar"
+        },
+        {
+            "label": "certificate",
+            "description": "this certificate given to, for having actively participated and cooperatively joined the"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "in honor of outstanding performance we gladly present, with this scholarship award for excellence in"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "in honor of outstanding performance and dedication we gladly present, a full scholarship for training in"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certificate grants, a full scholarship in"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certificate of scholarship is awarded to, being nominated for scholarship program of"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "in honor of outstanding performance we gladly present, with this scholarship for"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this scholarship is given to, this leadership conference scholarship is"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certificate is awarded to, being nominated for scholarship program and winning the scholarship"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this acknowledges that, has been recognized for outstanding achievement"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certificate is given to, for brilliant and consistent high standard of workmanship"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certificate is given to, in recognition of your continuing excellence in"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this scholarship is awarded to, in recognition of academic achievement"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "in honor of your outstanding academic performance we proudly present"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certifies that, has achieved a high level of scholarship in"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this certify that, was awarded an scholarship "
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this is to certify that, is awarded the"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "we proudly award, for demonstrating outstanding scholastic achievement"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this is to certify that, has been awarded a scholarship"
+        },
+        {
+            "label": "scholarshipcertificate",
+            "description": "this is to certify that, for outstanding scholastic achievement"
+        },
+        {
+            "label": "doctorate",
+            "description": "nomination, council"
+        },
+        {
+            "label": "doctorate",
+            "description": "graduate division"
+        },
+        {
+            "label": "doctorate",
+            "description": "diploma, all requirements of the board, doctor, regent, hereby awarded"
+        },
+        {
+            "label": "doctorate",
+            "description": "degree of doctor, original, research, education"
+        },
+        {
+            "label": "doctorate",
+            "description": "fulfill the requirements, doctorate"
+        },
+        {
+            "label": "doctorate",
+            "description": "obligation, responsibility, testimony whereof"
+        },
+        {
+            "label": "doctorate",
+            "description": "signed, sealed, phd"
+        },
+        {
+            "label": "doctorate",
+            "description": "seal of the university, signatures of, doctor of"
+        },
+        {
+            "label": "doctorate",
+            "description": "dean, president, college"
+        },
+        {
+            "label": "doctorate",
+            "description": "fulfilled all the, requirements, therefore"
+        },
+        {
+            "label": "doctorate",
+            "description": "president of the university, registrar"
+        },
+        {
+            "label": "doctorate",
+            "description": "republic of the philippines, state, university"
+        },
+        {
+            "label": "doctorate",
+            "description": "doctoral degree, course, board"
+        },
+        {
+            "label": "doctorate",
+            "description": " doctor of, authority"
+        },
+        {
+            "label": "doctorate",
+            "description": "seal of the college, signature of"
+        },
+        {
+            "label": "doctorate",
+            "description": "pertaining, given at"
+        },
+        {
+            "label": "doctorate",
+            "description": "given this, graduate, doctor of philosophy"
+        },
+        {
+            "label": "doctorate",
+            "description": "polytechnic, successfully completed"
+        },
+        {
+            "label": "doctorate",
+            "description": "all the rights, honor, privileges"
+        },
+        {
+            "label": "doctorate",
+            "description": "demonstrate, ability, philosophy "
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "recommendation of the faculty, action of its president, conferred upon"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masteral diploma given to"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "degree of, master of, in the field of, education"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "all its privileges, obligations"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "in witness thereof, this diploma duly signed"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "has been issued, the seal of the university affixed"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "by virtue of the authority, bested in them,"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "board, institutions of higher, has conferred"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "the degree of, master of"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "in testimony whereof, is awarded this diploma, duly certified"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "by the signatures, proper officers, seal of the university affixed"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "issued by the board of regents, upon recommendation of the faculty"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "hereby confers upon, the degree of, master of"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "witnessed thereof, this diploma duly signed, has been issued"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "seal of the university hereunto affixed"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Development Management"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Science in Finance"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in International Education"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Applied Business Economics"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Social Work"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Science in Marine Biology"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Public Administration"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Public Administration"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Science in Data Science"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Science in Data Science"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": " of Arts in Education, major in Educational Leadership"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": " of Science in Management"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Strategic Business Economics"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Science in Coastal Resource Management"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters of Arts in Psychology Major in Industrial / Organizational Psychology"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Political Economy – Evening Program"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Information Technology"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "masters in Information Technology"
+        },
+        {
+            "label": "masteraldiploma",
+            "description": "bachelor of Arts in English Major in Creative Writing"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "in recognition, successful completion, of the requisites, nomination of"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "recommendation of the faculty, school of law"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "have conferred on, having satisfied the requirements, prescribed by the legal education board"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "the degree of bachelor of law, with all the rights, privileges, honors, appertaining thereto"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "in witness whereof, by virtue of the authority, duly commited of the board of trustees"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "hereunder are the, seal of university, the signatures of the president, the dean, the registrar"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "given this, republic of the philippines"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "in nomination of the successful completion of the requisites, nomination of university of"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "by virtue of their authority, hereby confers upon, the bachelor of law, llb"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "with all honors, rights, thereto pertaining"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "on the nomination of, the faculty of the school of law, has admitted"
+        },
+        {
+            "label": "bacheloroflaws",
+            "description": "to the degree of, bachelor of law, in witness whereof, the seal of the university, the signatures of, affixed"
+        },
+        {
+            "label": "doctorofmedicine",
+            "description": "college of medicine, in consideration of satisfactory, completion of all requirements"
+        },
+        {
+            "label": "doctorofmedicine",
+            "description": "the degree of, doctor of medicine"
+        },
+        {
+            "label": "doctorofmedicine",
+            "description": "schools of medicine, biological science"
+        },
+        {
+            "label": "doctorofmedicine",
+            "description": "division of the biological science, medicine"
+        },
+        {
+            "label": "doctorofmedicine",
+            "description": "medicine doctor, this certify that dr, university of medicine"
+        },
+        {
+            "label": "doctorofmedicine",
+            "description": "doctor, medical college, prescribe, medical authority"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "nomination of the faculty, the degree of, bachelor of"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of arts"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of arts in fine arts"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science industrial engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in business administration in business process outsourcing"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in computer engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in accountancy"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of applied arts major in visual design"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in accounting technology"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in electronics engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in environmental and sanitary engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in geological science and engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in geology"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in service engineering and management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in psychology"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in business administration in finance"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in electrical engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in civil engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in biological engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in manufacturing engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in management science and engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of arts major in english language"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in mechanical engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in accountancy"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in entrepreneurship"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in hotel and restaurant management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in architecture"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in industrial design"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in multimedia arts and sciences"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of fine arts in digital cinema"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science mechanical engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science tourism management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in environmental planning and management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in leisure and tourism management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in business administration major in management with specialization in business analytics"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in information systems"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in interior design"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in material science and engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of arts in psychology"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in human capital development"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science electrical engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of early childhood education"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science civil engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science marketing"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science hotel management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in chemical engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in civil engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in electrical engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in industrial engineering"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in computer science"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in information technology"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in information technology"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in business administration"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in chemistry"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in construction engineering and management"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in technical communication"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in business administration in marketing"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in business administration in entrepreneurship"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "bachelor of science in accountancy"
+        }
+    ]
+}

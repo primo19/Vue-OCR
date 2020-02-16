@@ -24,8 +24,7 @@ const userSchema = mongoose.Schema({
         default: false
     },
     college: {
-        type: String,
-        required: true
+        type: String
     },
     position: {
         type: String,
