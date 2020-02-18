@@ -56,88 +56,21 @@ router.post('/adduser', async (req, res) => {
     }
 })
 
-router.get('/users/cof', async (req, res) => {
-    // View All Users
+router.get('/users', async (req, res) => {
+    // Get All Users
     try {
-        let users = await User.find({ college: "COF" })
-
+        let users = await User.find();
         res.status(201).send({ users })
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.get('/users/cas', async (req, res) => {
-    // View All Users
+router.post('/user', async (req, res) => {
+    // Get Single User
     try {
-        let users = await User.find({ college: "CAS" })
-
-        res.status(201).send({ users })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
-router.get('/users/ccs', async (req, res) => {
-    // View All Users
-    try {
-        let users = await User.find({ college: "CCS" })
-
-        res.status(201).send({ users })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
-router.get('/users/cte', async (req, res) => {
-    // View All Users
-    try {
-        let users = await User.find({ college: "CTE" })
-
-        res.status(201).send({ users })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
-router.get('/users/chmt', async (req, res) => {
-    // View All Users
-    try {
-        let users = await User.find({ college: "CHMT" })
-
-        res.status(201).send({ users })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-router.get('/users/cfnd', async (req, res) => {
-    // View All Users
-    try {
-        let users = await User.find({ college: "CFND" })
-
-        res.status(201).send({ users })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
-router.get('/users/cbma', async (req, res) => {
-    // View All Users
-    try {
-        let users = await User.find({ college: "CBMA" })
-
-        res.status(201).send({ users })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
-router.get('/users/ccje', async (req, res) => {
-    // View All Users
-    try {
-        let users = await User.find({ college: "CCJE" })
-
-        res.status(201).send({ users })
+        let user = await User.findOne({ _id: req.body })
+        res.status(201).send({ user })
     } catch (e) {
         res.status(400).send(e)
     }
@@ -145,7 +78,7 @@ router.get('/users/ccje', async (req, res) => {
 
 router.post('/user/remove', async (req, res) => {
     try {
-        User.deleteOne((err, obj) => {
+        User.findByIdAndDelete(req.body, (err, obj) => {
             if (err) throw err;
             res.status(201).send('Deleted Successfully')
         })
@@ -154,39 +87,21 @@ router.post('/user/remove', async (req, res) => {
     }
 })
 
-router.put('/user/:id', async (req, res) => {
+router.put('/user/update/:id', async (req, res) => {
     try {
+        // User.updateOne({ _id: req.body }, req.body, (err, user) => {
+        //     if (err) throw err;
+        //     //user.save();
+        //     res.status(201).send('User updated successfully')
         User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
-            if (err) return next(err)
-            user.save();
-            res.status(201).send('User updated successfully')
+            if (err) throw err;
+            res.status(201).send(user)
         })
+
+        // })
     } catch (e) {
         res.status(400).send(e)
     }
 })
-// router.post('/users/me/logout', auth, async (req, res) => {
-//     // Log user out of the application
-//     try {
-//         req.user.tokens = req.user.tokens.filter((token) => {
-//             return token.token != req.token
-//         })
-//         await req.user.save()
-//         res.send()
-//     } catch (error) {
-//         res.status(500).send(error)
-//     }
-// })
-
-// router.post('/users/me/logoutall', auth, async (req, res) => {
-//     // Log user out of all devices
-//     try {
-//         req.user.tokens.splice(0, req.user.tokens.length)
-//         await req.user.save()
-//         res.send()
-//     } catch (error) {
-//         res.status(500).send(error)
-//     }
-// })
 
 module.exports = router

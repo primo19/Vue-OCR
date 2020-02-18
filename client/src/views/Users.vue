@@ -119,23 +119,23 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
+          <form @submit.prevent="updateUser()">
             <div class="modal-body">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" v-model="name" />
+                <input type="text" class="form-control" id="name" v-model="user.name" />
               </div>
               <div class="form-group">
                 <label for="employeeno">Employee No.</label>
-                <input type="text" class="form-control" id="employeeno" v-model="employeeno" />
+                <input type="text" class="form-control" id="employeeno" v-model="user.employeeno" />
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" v-model="password" />
+                <input type="password" class="form-control" id="password" v-model="user.password" />
               </div>
               <div class="form-group">
                 <label for="selectCollege">College</label>
-                <select class="form-control" id="selectCollege" v-model="college">
+                <select class="form-control" id="selectCollege" v-model="user.college">
                   <option selected>COF</option>
                   <option>CAS</option>
                   <option>CCS</option>
@@ -148,19 +148,24 @@
               </div>
               <div class="form-group">
                 <label for="score">Total Score</label>
-                <input type="text" class="form-control" id="score" v-model="totalScore" />
+                <input type="text" class="form-control" id="score" v-model="user.totalScore" />
               </div>
               <div class="form-group">
                 <label for="userType">Type</label>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="userType" v-model="isAdmin" />
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="userType"
+                    v-model="user.isAdmin"
+                  />
                   <label class="form-check-label" for="userType">Administrator</label>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-dark" @click="updateUser">Add</button>
+              <button type="submit" class="btn btn-dark">Update</button>
             </div>
           </form>
         </div>
@@ -209,20 +214,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(cofs, index) in usersCof" :key="cofs._id">
-                    <th scope="row">{{cofs.name}}</th>
-                    <td>{{cofs.employeeID}}</td>
-                    <td>{{cofs.totalScore}}</td>
-                    <td>{{cofs.position}}</td>
+                  <tr v-for="(user, index) in users" v-show="user.college == 'COF'" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button
                         class="btn btn-dark mr-1"
                         data-toggle="modal"
                         data-target="#updateUser"
+                        @click="editUser(index,user._id)"
                       >Edit</button>
                       <button
                         class="btn btn-danger ml-1"
-                        @click="removeUser(index, cofs.college)"
+                        @click="removeUser(index, user._id)"
                       >Remove</button>
                     </td>
                   </tr>
@@ -271,16 +277,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(cass, index) in usersCas" :key="cass._id">
-                    <th scope="row">{{cass.name}}</th>
-                    <td>{{cass.employeeID}}</td>
-                    <td>{{cass.totalScore}}</td>
-                    <td>{{cass.position}}</td>
+                  <tr v-for="(user, index) in users" v-show="user.college == 'CAS'" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button
+                        class="btn btn-dark mr-1"
+                        data-toggle="modal"
+                        data-target="#updateUser"
+                        @click="editUser(index, user._id)"
+                      >Edit</button>
                       <button
                         class="btn btn-danger ml-1"
-                        @click="removeUser(index, cass.college)"
+                        @click="removeUser(index, user._id)"
                       >Remove</button>
                     </td>
                   </tr>
@@ -329,14 +340,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="csss in usersCcs" :key="csss.id">
-                    <th scope="row">{{csss.name}}</th>
-                    <td>{{csss.employeeID}}</td>
-                    <td>{{csss.totalScore}}</td>
-                    <td>{{csss.position}}</td>
+                  <tr v-for="(user, index) in users" v-show="user.college == 'CCS'" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, user._id)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -384,14 +398,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="ctes in usersCte" :key="ctes.id">
-                    <th scope="row">{{ctes.name}}</th>
-                    <td>{{ctes.employeeID}}</td>
-                    <td>{{ctes.totalScore}}</td>
-                    <td>{{ctes.position}}</td>
+                  <tr v-for="user in users" v-show="user.college == 'CTE'" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -439,14 +453,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="chmts in usersChmt" :key="chmts.id">
-                    <th scope="row">{{chmts.name}}</th>
-                    <td>{{chmts.employeeID}}</td>
-                    <td>{{chmts.totalScore}}</td>
-                    <td>{{chmts.position}}</td>
+                  <tr v-for="user in users" v-show="user.college == 'CHMT'" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -494,14 +508,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="cfnds in usersCfnd" :key="cfnds.id">
-                    <th scope="row">{{cfnds.name}}</th>
-                    <td>{{cfnds.employeeID}}</td>
-                    <td>{{cfnds.totalScore}}</td>
-                    <td>{{cfnds.position}}</td>
+                  <tr v-for="user in users" v-show="user.college == 'CFND'" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -549,14 +563,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="cbmas in usersCbma" :key="cbmas.id">
-                    <th scope="row">{{cbmas.name}}</th>
-                    <td>{{cbmas.employeeID}}</td>
-                    <td>{{cbmas.totalScore}}</td>
-                    <td>{{cbmas.position}}</td>
+                  <tr v-for="user in users" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -604,14 +618,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="ccjes in usersCcje" :key="ccjes.id">
-                    <th scope="row">{{ccjes.name}}</th>
-                    <td>{{ccjes.employeeID}}</td>
-                    <td>{{ccjes.totalScore}}</td>
-                    <td>{{ccjes.position}}</td>
+                  <tr v-for="user in users" :key="user._id">
+                    <th scope="row">{{user.name}}</th>
+                    <td>{{user.employeeID}}</td>
+                    <td>{{user.totalScore}}</td>
+                    <td>{{user.position}}</td>
                     <td>
                       <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1">Remove</button>
+                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -636,14 +650,17 @@ export default {
       college: "",
       isAdmin: false,
       totalScore: 0,
-      usersCof: [],
-      usersCas: [],
-      usersCcs: [],
-      usersCte: [],
-      usersChmt: [],
-      usersCfnd: [],
-      usersCbma: [],
-      usersCcje: []
+      users: [],
+      user: {
+        index: "",
+        id: "",
+        name: "",
+        employeeno: "",
+        password: "",
+        college: "",
+        isAdmin: "",
+        totalScore: ""
+      }
     };
   },
   methods: {
@@ -665,29 +682,14 @@ export default {
           college: this.college
         })
         .then(response => {
+          this.users.push(response.data.user);
+
           this.$toasted.show(
             "User " + response.data.user.name + " created successfully",
             {
               duration: 3000
             }
           );
-          if (this.college == "COF") {
-            this.usersCof.push(response.data.user);
-          } else if (this.college == "CAS") {
-            this.usersCas.push(response.data.user);
-          } else if (this.college == "CCS") {
-            this.usersCcs.push(response.data.user);
-          } else if (this.college == "CTE") {
-            this.usersCte.push(response.data.user);
-          } else if (this.college == "CHMT") {
-            this.usersChmt.push(response.data.user);
-          } else if (this.college == "CFND") {
-            this.usersCfnd.push(response.data.user);
-          } else if (this.college == "CBMA") {
-            this.usersCbma.push(response.data.user);
-          } else {
-            this.usersCcje.push(response.data.user);
-          }
         })
         .catch(() => {
           this.$toasted.show(
@@ -698,84 +700,19 @@ export default {
       $("#addUser").modal("hide");
     },
 
-    getUsersCof() {
-      let uri = "http://localhost:3000/users/cof";
+    getAllUsers() {
+      let uri = "http://localhost:3000/users";
       this.$http.get(uri).then(response => {
-        this.usersCof = response.data.users;
+        this.users = response.data.users;
       });
     },
-
-    getUsersCas() {
-      let uri = "http://localhost:3000/users/cas";
-      this.$http.get(uri).then(response => {
-        this.usersCas = response.data.users;
-      });
-    },
-
-    getUsersCcs() {
-      let uri = "http://localhost:3000/users/ccs";
-      this.$http.get(uri).then(response => {
-        this.usersCcs = response.data.users;
-      });
-    },
-
-    getUsersCte() {
-      let uri = "http://localhost:3000/users/cte";
-      this.$http.get(uri).then(response => {
-        this.usersCte = response.data.users;
-      });
-    },
-
-    getUsersChmt() {
-      let uri = "http://localhost:3000/users/chmt";
-      this.$http.get(uri).then(response => {
-        this.usersChmt = response.data.users;
-      });
-    },
-
-    getUsersCfnd() {
-      let uri = "http://localhost:3000/users/cfnd";
-      this.$http.get(uri).then(response => {
-        this.usersCfnd = response.data.users;
-      });
-    },
-
-    getUsersCbma() {
-      let uri = "http://localhost:3000/users/cbma";
-      this.$http.get(uri).then(response => {
-        this.usersCbma = response.data.users;
-      });
-    },
-
-    getUsersCcje() {
-      let uri = "http://localhost:3000/users/ccje";
-      this.$http.get(uri).then(response => {
-        this.usersCcje = response.data.users;
-      });
-    },
-
-    removeUser(index, col) {
+    removeUser(index, userID) {
       let uri = "http://localhost:3000/user/remove";
       this.$http
-        .post(uri)
+        .post(uri, { _id: userID })
         .then(() => {
-          if (col == "COF") {
-            this.usersCof.splice(index, 1);
-          } else if (col == "CAS") {
-            this.usersCas.splice(index, 1);
-          } else if (col == "CCS") {
-            this.usersCcs.splice(index, 1);
-          } else if (col == "CTE") {
-            this.usersCte.splice(index, 1);
-          } else if (col == "CHMT") {
-            this.usersChmt.splice(index, 1);
-          } else if (col == "CFND") {
-            this.usersCfnd.splice(index, 1);
-          } else if (col == "CBMA") {
-            this.usersCbma.splice(index, 1);
-          } else {
-            this.usersCcje.splice(index, 1);
-          }
+          this.users.splice(index, 1);
+
           this.$toasted.show("User has been deleted!", {
             duration: 3000
           });
@@ -786,33 +723,55 @@ export default {
     },
 
     updateUser() {
-      let uri = "http://localhost:3000/user/:id";
+      let uri = "http://localhost:3000/user/update/" + this.user.id;
+      //const userID = this.user.id;
       this.$http
-        .post(uri, {
-          name: this.name,
-          employeeID: this.employeeno,
-          password: this.password,
-          totalScore: this.totalScore,
-          isAdmin: this.isAdmin
+        .put(uri, {
+          name: this.user.name,
+          employeeID: this.user.employeeno,
+          password: this.user.password,
+          college: this.user.college,
+          isAdmin: this.user.isAdmin,
+          totalScore: this.user.totalScore
         })
         .then(() => {
-          this.$toasted.show("User");
+          this.getAllUsers();
+
+          this.$toasted.show("User has been Updated!", {
+            duration: 3000
+          });
         })
         .catch(e => {
           console.log(e);
         });
+
+      $("#updateUser").modal("hide");
+    },
+
+    editUser(index, userID) {
+      let uri = "http://localhost:3000/user";
+      this.$http
+        .post(uri, { _id: userID })
+        .then(response => {
+          this.user.index = index;
+          this.user.id = response.data.user._id;
+          this.user.name = response.data.user.name;
+          this.user.employeeno = response.data.user.employeeID;
+          this.user.password = response.data.user.password;
+          this.user.college = response.data.user.college;
+          this.user.isAdmin = response.data.user.isAdmin;
+          this.user.totalScore = response.data.user.totalScore;
+          console.log(this.user);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      // alert(userID);
     }
   },
 
   mounted() {
-    this.getUsersCof();
-    this.getUsersCas();
-    this.getUsersCcs();
-    this.getUsersCte();
-    this.getUsersChmt();
-    this.getUsersCfnd();
-    this.getUsersCbma();
-    this.getUsersCcje();
+    this.getAllUsers();
   }
 };
 </script>

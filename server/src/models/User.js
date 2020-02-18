@@ -6,8 +6,7 @@ const jwt = require('jsonwebtoken')
 const userSchema = mongoose.Schema({
     employeeID: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
     },
     name: {
         type: String,
@@ -33,6 +32,9 @@ const userSchema = mongoose.Schema({
     totalScore: {
         type: Number,
         default: 0
+    },
+    ptsToRank: {
+        type: Number
     },
     tokens: [{
         token: {

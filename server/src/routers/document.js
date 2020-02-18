@@ -6,12 +6,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const router = express.Router();
 const data = require('../assets/data/dataset.json')
-// const Document = require('../models/Document')
-
-// const { createWorker } = require("tesseract.js");
-// const worker = createWorker({
-//     logger: m => console.log(m)
-// });
+const Document = require('../models/Document')
 
 const Tesseract = require('tesseract.js')
 
@@ -38,24 +33,6 @@ router.post('/classify', (req, res) => {
 
         fs.readFile(`./uploads/${req.file.originalname}`, (err, image) => {
             if (err) return console.log(err)
-
-            // (async () => {
-            //     //Use Tesseractjs
-            //     await worker.load();
-            //     await worker.loadLanguage('eng');
-            //     await worker.initialize('eng');
-            //     const { data: { text } } = await worker.recognize(image);
-            //     console.log(text)
-            //     await worker.terminate()
-
-            //     // for (var i = 0; i < data.doc.length; i++) {
-            //     //     await whichDoc.learn(data.doc[i].description, data.doc[i].label)
-            //     // }
-            //     // let documentType = await whichDoc.categorize(text)
-            //     // console.log(documentType)
-            //     // res.status(201).send(documentType)
-            // })();
-
             Tesseract.recognize(image, 'eng', { logger: m => console.log(m) })
                 .then(async ({ data: { text } }) => {
                     console.log(text)
@@ -63,9 +40,8 @@ router.post('/classify', (req, res) => {
                         await whichDoc.learn(data.doc[i].description, data.doc[i].label)
                     }
                     let documentType = await whichDoc.categorize(text)
-                    console.log(documentType)
+                    res.status(201).send({ documentType })
                 })
-
         })
 
 

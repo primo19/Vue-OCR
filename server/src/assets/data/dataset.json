@@ -782,7 +782,7 @@
         },
         {
             "label": "masteraldiploma",
-            "description": "bachelor of Arts in English Major in Creative Writing"
+            "description": "master of Arts in English Major in Creative Writing"
         },
         {
             "label": "bacheloroflaws",
@@ -862,11 +862,23 @@
         },
         {
             "label": "bachelordiploma",
+            "description": "Bachelor Of Science WITH ALL THE RIGHTS AND PRIVILEGES IMMUNITIES AND HONORS THEREUNTO BELONGING AND IN TESTIMONY THEREOF IT GRANTS THIS DIPLOMA SEALED"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "IN PURSUANCE OF THE AUTHORITY VESTED IN IT BY THE LAWS OF THE STATE OF NEW YORK AND UPON THE RECOMMENDATION OF THE FACULTY OF"
+        },
+        {
+            "label": "bachelordiploma",
             "description": "bachelor of arts"
         },
         {
             "label": "bachelordiploma",
             "description": "bachelor of science"
+        },
+        {
+            "label": "bachelordiploma",
+            "description": "Bachelor of Science in LOST Studies"
         },
         {
             "label": "bachelordiploma",

@@ -146,6 +146,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 export default {
   data() {
     return {
@@ -172,7 +173,28 @@ export default {
       formData.append("file", this.imageFile);
 
       try {
-        await this.$http.post(uri, formData);
+        await this.$http
+          .post(uri, formData)
+          .then(response => {
+            this.$toasted.show(
+              "The Document File Type is " + response.data.documentType,
+              {
+                action: {
+                  text: "close",
+                  onClick: (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+                },
+                type: "success"
+              }
+            );
+          })
+          .catch(e => {
+            console.log(e);
+          })
+          .finally(() => {
+            $("#addDocumentModal").modal("hide");
+          });
       } catch (e) {
         console.log(e);
       }
