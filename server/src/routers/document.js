@@ -28,9 +28,9 @@ const upload = multer({ storage: storage }).single('file')
 // })
 
 router.post('/classify', (req, res) => {
+
     upload(req, res, err => {
         //res.json({ file: req.file })
-
         fs.readFile(`./uploads/${req.file.originalname}`, (err, image) => {
             if (err) return console.log(err)
             Tesseract.recognize(image, 'eng', { logger: m => console.log(m) })
@@ -40,12 +40,46 @@ router.post('/classify', (req, res) => {
                         await whichDoc.learn(data.doc[i].description, data.doc[i].label)
                     }
                     let documentType = await whichDoc.categorize(text)
-                    res.status(201).send({ documentType })
+                    let docFilename = req.file.originalname
+                    res.status(201).send({ documentType, docFilename })
                 })
         })
-
-
     })
+})
+
+router.post('/upload', async (req, res) => {
+    try {
+        const doc = new Document(req.body)
+        await doc.save()
+        res.status(201).send({ doc })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.post('/upload/tor', (req, res) => {
+    upload(req, res, err => {
+        const doc = new Document(req.file.originalname, req.body)
+    })
+})
+
+router.post('/add/isbn', async (req, res) => {
+    try {
+        const doc = new Document(req.body)
+        await doc.save()
+        res.status(201).send({ doc })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.get('/documents', async (req, res) => {
+    try {
+        const docs = await Document.find();
+        res.status(201).send({ docs })
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
 module.exports = router

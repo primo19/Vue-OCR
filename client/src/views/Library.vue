@@ -30,6 +30,39 @@
       </div>
     </nav>
 
+    <div class="container">
+      <div class="card mx-auto mt-3" style="width: 50rem;">
+        <div class="card-header">
+          <h4>
+            <strong>Search ISBN</strong>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form @submit.prevent="getISBN">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              v-model="isbn"
+              required
+            />
+            <button class="btn btn-outline-success mt-3" type="submit">Search</button>
+          </form>
+
+          <div class="my-3 row" v-show="displayAttr">
+            <span class="col-12">Title: {{book.title}}</span>
+            <span class="col-12">ISBN: {{book.isbn}}</span>
+            <span
+              class="col-12"
+              v-for="(author, index) in book.authors"
+              :key="index"
+            >Author: {{author}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="accordion" style="padding-bottom: 2rem">
       <div class="container-fluid my-5">
         <!-- College of Fisheries Table -->
@@ -413,7 +446,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isbn: "",
+      book: {
+        title: "",
+        authors: []
+      },
+      displayAttr: false
+    };
   },
   methods: {
     logout() {
@@ -421,6 +461,23 @@ export default {
       localStorage.removeItem("jwt");
 
       this.$router.push("/");
+    },
+
+    getISBN() {
+      this.$http
+        .get("https://api.altmetric.com/v1/isbn/" + this.isbn)
+        .then(response => {
+          (this.book.title = response.data.title),
+            (this.book.isbn = response.data.isbn),
+            (this.book.authors = response.data.authors_or_editors);
+          this.displayAttr = true;
+        })
+        .then(function(json) {
+          console.log(json);
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+        });
     }
   }
 };
@@ -437,5 +494,9 @@ export default {
 
 .btn {
   font-weight: bold;
+}
+
+.card-body {
+  text-align: center;
 }
 </style>

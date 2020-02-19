@@ -41,7 +41,6 @@ router.post('/login', async (req, res) => {
     } catch (error) {
         res.status(400).send(error)
     }
-
 })
 
 router.post('/adduser', async (req, res) => {

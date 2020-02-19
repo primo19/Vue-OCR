@@ -8,6 +8,15 @@ const documentSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    bookIsbn: {
+        type: String
+    },
+    mainImage: {
+        type: Buffer
+    },
+    mainImageName: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now

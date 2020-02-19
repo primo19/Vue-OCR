@@ -11,13 +11,13 @@
           <form @submit.prevent="login">
             <div class="form-group">
               <label for="employeeno">Employee No.</label>
-              <input type="text" class="form-control" id="employeeno" v-model="employeeno" />
+              <input type="text" class="form-control" id="employeeno" v-model="employeeno" required />
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" v-model="password" />
+              <input type="password" class="form-control" id="password" v-model="password" required />
             </div>
-            <button type="submit" class="btn btn-color">Submit</button>
+            <button type="submit" class="btn btn-color">Login</button>
           </form>
         </div>
       </div>
@@ -62,7 +62,11 @@ export default {
               }
             }
           })
-          .catch(function(error) {
+          .catch(error => {
+            this.$toasted.show("Wrong Employee No. or Password", {
+              type: "error",
+              duration: 3000
+            });
             console.log(error.response);
           });
       }
