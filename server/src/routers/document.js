@@ -28,7 +28,6 @@ const upload = multer({ storage: storage }).single('file')
 // })
 
 router.post('/classify', (req, res) => {
-
     upload(req, res, err => {
         //res.json({ file: req.file })
         fs.readFile(`./uploads/${req.file.originalname}`, (err, image) => {

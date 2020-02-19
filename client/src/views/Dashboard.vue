@@ -108,21 +108,11 @@
           </div>
           <form @submit.prevent="classifyFile" enctype="multipart/form-data">
             <div class="modal-body">
-              <!-- <div class="form-group">
-                <label for="exampleFormControlFile1">Upload File to Classify</label>
-                <input
-                  type="file"
-                  class="form-control-file"
-                  name="file"
-                  ref="file"
-                  @change="selectFile"
-                />
-              </div>-->
-              <input type="file" ref="file" name="file" @change="selectFile" />
+              <input type="file" ref="file" name="file" @change="selectFile($event)" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-dark">Submit & Classify</button>
+              <button type="submit" class="btn btn-dark">Upload & Classify</button>
             </div>
           </form>
         </div>
@@ -148,17 +138,7 @@
           </div>
           <form @submit.prevent="uploadTOR" enctype="multipart/form-data">
             <div class="modal-body">
-              <!-- <div class="form-group">
-                <label for="exampleFormControlFile1">Upload File to Classify</label>
-                <input
-                  type="file"
-                  class="form-control-file"
-                  name="file"
-                  ref="file"
-                  @change="selectFile"
-                />
-              </div>-->
-              <input type="file" ref="file" name="file" @change="selectFile" />
+              <input type="file" ref="file" name="file" @change="selectFile($event)" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -251,6 +231,7 @@ export default {
       ISBN: ""
     };
   },
+
   methods: {
     logout() {
       localStorage.removeItem("user");
@@ -259,9 +240,8 @@ export default {
       this.$router.push("/");
     },
 
-    selectFile() {
-      const file = this.$refs.file.files[0];
-      this.imageFile = file;
+    selectFile(event) {
+      this.imageFile = event.target.files[0];
     },
 
     uploadFile() {

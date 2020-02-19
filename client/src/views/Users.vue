@@ -346,7 +346,7 @@
                     <td>{{user.totalScore}}</td>
                     <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
+                      <button class="btn btn-dark mr-1" @click="editUser(index,user._id)">Edit</button>
                       <button
                         class="btn btn-danger ml-1"
                         @click="removeUser(index, user._id)"
@@ -404,8 +404,11 @@
                     <td>{{user.totalScore}}</td>
                     <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
+                      <button class="btn btn-dark mr-1" @click="editUser(index,user._id)">Edit</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, user._id)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -459,8 +462,11 @@
                     <td>{{user.totalScore}}</td>
                     <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
+                      <button class="btn btn-dark mr-1" @click="editUser(index,user._id)">Edit</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, user._id)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -514,8 +520,11 @@
                     <td>{{user.totalScore}}</td>
                     <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
+                      <button class="btn btn-dark mr-1" @click="editUser(index,user._id)">Edit</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, user._id)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -569,8 +578,11 @@
                     <td>{{user.totalScore}}</td>
                     <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
+                      <button class="btn btn-dark mr-1" @click="editUser(index,user._id)">Edit</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, user._id)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
@@ -624,8 +636,11 @@
                     <td>{{user.totalScore}}</td>
                     <td>{{user.position}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Edit</button>
-                      <button class="btn btn-danger ml-1" @click="removeUser(user._id)">Remove</button>
+                      <button class="btn btn-dark mr-1" @click="editUser(index,user._id)">Edit</button>
+                      <button
+                        class="btn btn-danger ml-1"
+                        @click="removeUser(index, user._id)"
+                      >Remove</button>
                     </td>
                   </tr>
                 </tbody>
