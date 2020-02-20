@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const path = require('path')
 
 const documentSchema = mongoose.Schema({
     uploaderName: String,
@@ -17,6 +18,9 @@ const documentSchema = mongoose.Schema({
     mainImageName: {
         type: String
     },
+    mainImageType: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -24,6 +28,12 @@ const documentSchema = mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    }
+})
+
+documentSchema.virtual('mainImagePath').get(() => {
+    if (this.mainImageName != null) {
+        return path.join('/server/uploads/', this.mainImageName)
     }
 })
 

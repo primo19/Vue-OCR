@@ -7,6 +7,7 @@ const path = require('path')
 const router = express.Router();
 const data = require('../assets/data/dataset.json')
 const Document = require('../models/Document')
+const imageMimeTypes = ['image/jpeg', 'image/png']
 
 const Tesseract = require('tesseract.js')
 
@@ -47,19 +48,25 @@ router.post('/classify', (req, res) => {
 })
 
 router.post('/upload', async (req, res) => {
+    const doc = new Document(req.body)
+    saveImage(doc, req.body.file)
     try {
-        const doc = new Document(req.body)
-        await doc.save()
-        res.status(201).send({ doc })
+        const newDocu = await doc.save()
+        res.status(201).send({ newDocu })
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.post('/upload/tor', (req, res) => {
-    upload(req, res, err => {
-        const doc = new Document(req.file.originalname, req.body)
-    })
+router.post('/upload/tor', async (req, res) => {
+    try {
+        const doc = new Document(req.body)
+        doc.save();
+        res.status(201).send({ doc })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+
 })
 
 router.post('/add/isbn', async (req, res) => {
@@ -80,5 +87,16 @@ router.get('/documents', async (req, res) => {
         res.status(400).send(e)
     }
 })
+
+function saveImage(docu, imageEncoded) {
+    if (imageEncoded == null) {
+        return
+    }
+    const document = JSON.parse(imageEncoded)
+    if (document != null && imageMimeTypes.includes(document.type)) {
+        docu.mainImage = new Buffer.from(document.data, 'base64')
+        docu.mainImageType = document.type
+    }
+}
 
 module.exports = router

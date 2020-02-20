@@ -108,7 +108,14 @@
           </div>
           <form @submit.prevent="classifyFile" enctype="multipart/form-data">
             <div class="modal-body">
-              <input type="file" ref="file" name="file" @change="selectFile($event)" />
+              <!-- <input type="file" ref="file" name="file" @change="selectFile($event)" /> -->
+              <file-pond
+                name="file"
+                ref="pond"
+                class-name="my-pond"
+                label-idle="Drop files here..."
+                v-on:addfile="selectFile"
+              />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -138,7 +145,7 @@
           </div>
           <form @submit.prevent="uploadTOR" enctype="multipart/form-data">
             <div class="modal-body">
-              <input type="file" ref="file" name="file" @change="selectFile($event)" />
+              <input type="file" ref="file" name="file" @change="selectTor($event)" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -217,13 +224,26 @@
 
 <script>
 import $ from "jquery";
+
+import vueFilePond from "vue-filepond";
+
+// Import styles
+import "filepond/dist/filepond.min.css";
+
+// Create FilePond component
+const FilePond = vueFilePond();
 export default {
+  components: {
+    FilePond
+  },
   data() {
     return {
+      imgPreUrl: "../../../server/uploads/",
       imageFile: "",
       uploaderName: "",
       docType: "",
       score: 0,
+      isbnScore: 5,
       status: false,
       userData: {},
       documents: [],
@@ -240,8 +260,14 @@ export default {
       this.$router.push("/");
     },
 
-    selectFile(event) {
+    selectFile() {
+      this.imageFile = this.$refs.pond.getFile();
+      console.log(this.imageFile.file);
+    },
+
+    selectTor(event) {
       this.imageFile = event.target.files[0];
+      console.log(this.imageFile);
     },
 
     uploadFile() {
@@ -259,7 +285,7 @@ export default {
       const uri = "http://localhost:3000/classify";
 
       const formData = new FormData();
-      formData.append("file", this.imageFile);
+      formData.append("file", this.imageFile.file);
 
       try {
         await this.$http
@@ -277,7 +303,6 @@ export default {
               })
               .then(response => {
                 this.documents.push(response.data.doc);
-
                 this.$toasted.show("Document Uploaded Successfully!", {
                   action: {
                     text: "close",
@@ -320,13 +345,14 @@ export default {
       const uri = "http://localhost:3000/upload/tor";
 
       const formData = new FormData();
-      formData.append("file", this.imageFile);
+      formData.append("file", this.imageFile.file);
 
       this.$http
-        .post(uri, formData, {
+        .post(uri, {
           uploaderName: this.userData.name,
           score: this.score,
-          status: this.status
+          status: this.status,
+          mainImageName: this.imageFile.name
         })
         .then(() => {
           this.getDocuments();
@@ -353,7 +379,7 @@ export default {
         .post(uri, {
           uploaderName: this.userData.name,
           bookIsbn: this.ISBN,
-          score: this.score
+          score: this.isbnScore
         })
         .then(() => {
           this.getDocuments();
