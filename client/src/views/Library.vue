@@ -122,18 +122,60 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="doc in documents" v-show="doc.college == collegeSelect" :key="doc._id">
+                  <tr
+                    v-for="(doc, index) in documents"
+                    v-show="doc.college == collegeSelect"
+                    :key="doc._id"
+                  >
                     <th scope="row">{{doc.createdAt}}</th>
                     <td>{{doc.mainImageName}}</td>
                     <td>{{doc.uploaderName}}</td>
                     <td>
-                      <button class="btn btn-dark mr-1">Show</button>
+                      <button
+                        class="btn btn-dark mr-1"
+                        data-toggle="modal"
+                        data-target="#showDocumentModal"
+                        @click="getDocument(index, doc._id)"
+                      >Show</button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="showDocumentModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="showDocumentModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="showDocumentModalTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action>
+            <div class="modal-body">
+              <img src="../assets/logo.png" alt height="400" width="400" />
+              <div class="form-group">
+                <label for="score">Score</label>
+                <input type="number" class="form-control" id="score" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Reject</button>
+              <button type="submit" class="btn btn-primary">Accept</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -151,7 +193,12 @@ export default {
       },
       displayAttr: false,
       collegeSelect: "COF",
-      documents: []
+      documents: [],
+      document: {
+        index: "",
+        id: "",
+        score: ""
+      }
     };
   },
   methods: {
@@ -187,6 +234,23 @@ export default {
         .then(response => {
           this.documents = response.data.docs;
           console.log(this.documents);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    getDocument(index, docID) {
+      const uri = "http://localhost:3000/document";
+
+      this.$http
+        .post(uri, {
+          _id: docID
+        })
+        .then(res => {
+          (this.document.index = index),
+            (this.document.id = res.data.doc._id),
+            (this.document.score = res.data.doc.score);
         })
         .catch(e => {
           console.log(e);

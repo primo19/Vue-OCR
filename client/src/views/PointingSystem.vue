@@ -99,14 +99,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <form @submit.prevent="addCategory">
-      <label for="category">Category</label>
-      <input type="text" id="category" v-model="category" />
-      <label for="score">Score</label>
-      <input type="number" id="score" v-model="score" />
-      <button type="submit">Submit</button>
-    </form>-->
   </div>
 </template>
 
