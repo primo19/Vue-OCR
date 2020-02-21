@@ -211,15 +211,13 @@ export default {
 
     getISBN() {
       this.$http
-        .get("https://api.altmetric.com/v1/isbn/" + this.isbn)
+        .get("https://www.googleapis.com/books/v1/volumes?q=" + this.isbn)
         .then(response => {
-          (this.book.title = response.data.title),
-            (this.book.isbn = response.data.isbn),
-            (this.book.authors = response.data.authors_or_editors);
+          (this.book.title = response.data.items[0].volumeInfo.title),
+            (this.book.isbn = this.isbn),
+            (this.book.authors = response.data.items[0].volumeInfo.authors);
           this.displayAttr = true;
-        })
-        .then(function(json) {
-          console.log(json);
+          // console.log(response.data.items[0].volumeInfo.title);
         })
         .catch(function(error) {
           console.error("Error:", error);
