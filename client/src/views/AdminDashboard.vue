@@ -23,6 +23,9 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/users">Faculty Members</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/pointingsystem">Scoring Criteria</router-link>
+          </li>
         </ul>
         <div class="form-inline my2 my-lg-0">
           <button type="button" class="btn btn-dark" @click="logout">Logout</button>

@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = require('./routers/user')
 const docRouter = require('./routers/document')
+const scoreRouter = require('./routers/score')
 const port = process.env.PORT
 const morgan = require('morgan')
 const cors = require('cors')
@@ -14,6 +15,7 @@ app.use(cors())
 app.use(express.json())
 app.use(userRouter)
 app.use(docRouter)
+app.use(scoreRouter)
 app.use(morgan('combined'))
 
 app.listen(port, () => {

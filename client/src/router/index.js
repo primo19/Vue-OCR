@@ -5,6 +5,7 @@ import Dashboard from '../views/Dashboard.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
 import Users from '../views/Users.vue'
 import Library from '../views/Library.vue'
+import PointingSystem from '../views/PointingSystem.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,15 @@ const routes = [
     path: '/library',
     name: 'Library',
     component: Library,
+    meta: {
+      requiresAuth: true,
+      is_admin: true
+    }
+  },
+  {
+    path: '/pointingsystem',
+    name: 'PointingSystem',
+    component: PointingSystem,
     meta: {
       requiresAuth: true,
       is_admin: true

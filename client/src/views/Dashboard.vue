@@ -115,6 +115,7 @@
                 class-name="my-pond"
                 label-idle="Drop files here..."
                 v-on:addfile="selectFile"
+                aria-required="true"
               />
             </div>
             <div class="modal-footer">
@@ -248,7 +249,8 @@ export default {
       userData: {},
       documents: [],
       userPosition: "",
-      ISBN: ""
+      ISBN: "",
+      college: ""
     };
   },
 
@@ -262,7 +264,7 @@ export default {
 
     selectFile() {
       this.imageFile = this.$refs.pond.getFile();
-      console.log(this.imageFile.file);
+      console.log(this.imageFile);
     },
 
     selectTor(event) {
@@ -285,7 +287,7 @@ export default {
       const uri = "http://localhost:3000/classify";
 
       const formData = new FormData();
-      formData.append("file", this.imageFile.file);
+      formData.append("file", this.imageFile.source);
 
       try {
         await this.$http
@@ -299,10 +301,11 @@ export default {
                 typeOfDoc: this.docType,
                 score: this.score,
                 status: this.status,
+                college: this.userData.college,
                 mainImageName: response.data.docFilename
               })
-              .then(response => {
-                this.documents.push(response.data.doc);
+              .then(() => {
+                this.getDocuments();
                 this.$toasted.show("Document Uploaded Successfully!", {
                   action: {
                     text: "close",
@@ -345,13 +348,14 @@ export default {
       const uri = "http://localhost:3000/upload/tor";
 
       const formData = new FormData();
-      formData.append("file", this.imageFile.file);
+      formData.append("file", this.imageFile.source);
 
       this.$http
         .post(uri, {
           uploaderName: this.userData.name,
           score: this.score,
           status: this.status,
+          college: this.userData.college,
           mainImageName: this.imageFile.name
         })
         .then(() => {
@@ -379,7 +383,8 @@ export default {
         .post(uri, {
           uploaderName: this.userData.name,
           bookIsbn: this.ISBN,
-          score: this.isbnScore
+          score: this.isbnScore,
+          college: this.userData.college
         })
         .then(() => {
           this.getDocuments();

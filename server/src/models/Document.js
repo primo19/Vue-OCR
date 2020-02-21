@@ -3,6 +3,7 @@ const path = require('path')
 
 const documentSchema = mongoose.Schema({
     uploaderName: String,
+    college: String,
     typeOfDoc: String,
     score: Number,
     status: {

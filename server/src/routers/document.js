@@ -49,7 +49,7 @@ router.post('/classify', (req, res) => {
 
 router.post('/upload', async (req, res) => {
     const doc = new Document(req.body)
-    saveImage(doc, req.body.file)
+    //saveImage(doc, req.body.file)
     try {
         const newDocu = await doc.save()
         res.status(201).send({ newDocu })
