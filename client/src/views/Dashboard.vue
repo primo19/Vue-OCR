@@ -114,6 +114,8 @@
                 ref="pond"
                 class-name="my-pond"
                 label-idle="Drop files here..."
+                accepted-file-types="image/jpeg, image/png, image/jpg"
+                checkValidity="true"
                 v-on:addfile="selectFile"
                 aria-required="true"
               />
@@ -146,7 +148,15 @@
           </div>
           <form @submit.prevent="uploadTOR" enctype="multipart/form-data">
             <div class="modal-body">
-              <input type="file" ref="file" name="file" @change="selectTor($event)" />
+              <file-pond
+                name="fileTOR"
+                ref="pondTOR"
+                class-name="my-pond"
+                label-idle="Drop files here..."
+                v-on:addfile="selectTor"
+                aria-required="true"
+              />
+              <!-- <input type="file" ref="file" name="file" @change="selectTor($event)" /> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -202,6 +212,7 @@
             <thead class="thead-dark">
               <tr>
                 <th scope="col">Document</th>
+                <th scope="col">Image</th>
                 <th scope="col">Status</th>
                 <th scope="col">Score</th>
                 <th scope="col">Date Uploaded</th>
@@ -210,6 +221,9 @@
             <tbody>
               <tr v-for="doc in documents" :key="doc._id">
                 <th scope="row">{{doc.mainImageName || doc.bookIsbn}}</th>
+                <td>
+                  <img :src="doc.mainImage" alt width="150" height="150" />
+                </td>
                 <td v-if="doc.status == false">Pending</td>
                 <td v-else>Approved</td>
                 <td>{{doc.score}}</td>
@@ -231,15 +245,17 @@ import vueFilePond from "vue-filepond";
 // Import styles
 import "filepond/dist/filepond.min.css";
 
+// Import the plugin code
+import FilePondPluginFileEncode from "filepond-plugin-file-encode";
+
 // Create FilePond component
-const FilePond = vueFilePond();
+const FilePond = vueFilePond(FilePondPluginFileEncode);
 export default {
   components: {
     FilePond
   },
   data() {
     return {
-      imgPreUrl: "../../../server/uploads/",
       imageFile: "",
       uploaderName: "",
       docType: "",
@@ -267,8 +283,8 @@ export default {
       console.log(this.imageFile);
     },
 
-    selectTor(event) {
-      this.imageFile = event.target.files[0];
+    selectTor() {
+      this.imageFile = this.$refs.pondTOR.getFile();
       console.log(this.imageFile);
     },
 
@@ -287,7 +303,7 @@ export default {
       const uri = "http://localhost:3000/classify";
 
       const formData = new FormData();
-      formData.append("file", this.imageFile.source);
+      formData.append("file", this.imageFile.file);
 
       try {
         await this.$http
@@ -302,7 +318,9 @@ export default {
                 score: this.score,
                 status: this.status,
                 college: this.userData.college,
-                mainImageName: response.data.docFilename
+                mainImageName: response.data.docFilename,
+                mainImage: this.imageFile.getFileEncodeDataURL(),
+                mainImageType: this.imageFile.fileType
               })
               .then(() => {
                 this.getDocuments();
@@ -333,11 +351,20 @@ export default {
               }
             );
           })
-          .catch(e => {
-            console.log(e);
+          .catch(() => {
+            this.$toasted.show("Please choose a file to upload and classify", {
+              action: {
+                text: "close",
+                onClick: (e, toastObject) => {
+                  toastObject.goAway(0);
+                }
+              },
+              type: "error"
+            });
           })
           .finally(() => {
             $("#addDocumentModal").modal("hide");
+            FilePond.destroy(this.imageFile);
           });
       } catch (e) {
         console.log(e);
@@ -348,7 +375,7 @@ export default {
       const uri = "http://localhost:3000/upload/tor";
 
       const formData = new FormData();
-      formData.append("file", this.imageFile.source);
+      formData.append("file", this.imageFile.file);
 
       this.$http
         .post(uri, {
@@ -356,10 +383,12 @@ export default {
           score: this.score,
           status: this.status,
           college: this.userData.college,
-          mainImageName: this.imageFile.name
+          mainImageName: this.imageFile.filename,
+          mainImage: this.imageFile.getFileEncodeDataURL(),
+          mainImageType: this.imageFile.fileType
         })
-        .then(() => {
-          this.getDocuments();
+        .then(response => {
+          this.documents.push(response.data.doc);
           this.$toasted.show("TOR Uploaded Successfully", {
             action: {
               text: "close",

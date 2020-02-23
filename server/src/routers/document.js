@@ -48,11 +48,10 @@ router.post('/classify', (req, res) => {
 })
 
 router.post('/upload', async (req, res) => {
-    const doc = new Document(req.body)
-    //saveImage(doc, req.body.file)
     try {
-        const newDocu = await doc.save()
-        res.status(201).send({ newDocu })
+        const doc = new Document(req.body)
+        await doc.save()
+        res.status(201).send({ doc })
     } catch (e) {
         res.status(400).send(e)
     }
@@ -88,15 +87,12 @@ router.get('/documents', async (req, res) => {
     }
 })
 
-function saveImage(docu, imageEncoded) {
-    if (imageEncoded == null) {
-        return
+router.post('/document', async (req, res) => {
+    try {
+        const doc = await Document.findOne({ _id: req.body })
+        res.status(201).send({ doc })
+    } catch (e) {
+        res.status(400).send(e)
     }
-    const document = JSON.parse(imageEncoded)
-    if (document != null && imageMimeTypes.includes(document.type)) {
-        docu.mainImage = new Buffer.from(document.data, 'base64')
-        docu.mainImageType = document.type
-    }
-}
-
+})
 module.exports = router

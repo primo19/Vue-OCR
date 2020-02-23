@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Axios from 'axios'
 
+Vue.use(require('vue-moment'))
+
 Vue.use(Toasted)
 
 Vue.prototype.$http = Axios;

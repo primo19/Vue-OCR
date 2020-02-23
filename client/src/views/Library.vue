@@ -127,7 +127,7 @@
                     v-show="doc.college == collegeSelect"
                     :key="doc._id"
                   >
-                    <th scope="row">{{doc.createdAt}}</th>
+                    <th scope="row">{{doc.createdAt | moment("dddd, MMMM Do YYYY")}}</th>
                     <td>{{doc.mainImageName}}</td>
                     <td>{{doc.uploaderName}}</td>
                     <td>

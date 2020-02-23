@@ -14,7 +14,7 @@ const documentSchema = mongoose.Schema({
         type: String
     },
     mainImage: {
-        type: Buffer
+        type: String
     },
     mainImageName: {
         type: String
@@ -32,9 +32,9 @@ const documentSchema = mongoose.Schema({
     }
 })
 
-documentSchema.virtual('mainImagePath').get(() => {
-    if (this.mainImageName != null) {
-        return path.join('/server/uploads/', this.mainImageName)
+documentSchema.virtual('mainImagePath').get(function () {
+    if (this.mainImage != null && this.mainImageType) {
+        return `data:${this.mainImageType};charset=utf-8;base64,${this.mainImage.toString('base64')}`
     }
 })
 
