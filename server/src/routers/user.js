@@ -103,4 +103,15 @@ router.put('/user/update/:id', async (req, res) => {
     }
 })
 
+router.put('/user/pds/:id', async (req, res) => {
+    try {
+        User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
+            if (err) throw err;
+            res.status(201).send(user)
+        })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
 module.exports = router

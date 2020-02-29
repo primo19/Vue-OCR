@@ -1,25 +1,38 @@
 const mongoose = require('mongoose')
 const path = require('path')
+const User = require('../models/User')
 
 const documentSchema = mongoose.Schema({
+    uploaderID: String,
     uploaderName: String,
+    uploaderRank: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     college: String,
     typeOfDoc: String,
-    score: Number,
+    initialScore: Number,
+    finalScore: {
+        type: Number,
+        default: 0
+    },
     status: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: "Pending"
+    },
+    note: {
+        type: String
     },
     bookIsbn: {
         type: String
     },
-    mainImage: {
+    mainDoc: {
         type: String
     },
-    mainImageName: {
+    mainDocName: {
         type: String
     },
-    mainImageType: {
+    mainDocType: {
         type: String
     },
     createdAt: {

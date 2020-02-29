@@ -176,7 +176,8 @@
     </div>
 
     <!-- TABLES -->
-    <div id="accordion" style="padding-bottom: 2rem">
+    <div class="container-fluid">
+      <div id="accordion" style="padding-bottom: 2rem">
       <div class="container-fluid my-5">
         <!-- College of Fisheries Table -->
         <div class="card mx-5 mb-5">
@@ -653,6 +654,8 @@
         </div>
       </div>
     </div>
+    </div>
+    
   </div>
 </template>
 

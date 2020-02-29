@@ -57,7 +57,29 @@ router.post('/upload', async (req, res) => {
     }
 })
 
-router.post('/upload/tor', async (req, res) => {
+router.post('/upload/eq', async (req, res) => {
+    try {
+        const doc = new Document(req.body)
+        doc.save();
+        res.status(201).send({ doc })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+
+})
+
+router.post('/upload/els', async (req, res) => {
+    try {
+        const doc = new Document(req.body)
+        doc.save();
+        res.status(201).send({ doc })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+
+})
+
+router.post('/upload/pdah', async (req, res) => {
     try {
         const doc = new Document(req.body)
         doc.save();

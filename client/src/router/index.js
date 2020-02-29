@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
+import DocumentManagement from '../views/DocumentManagement.vue'
 import Users from '../views/Users.vue'
 import Library from '../views/Library.vue'
 import PointingSystem from '../views/PointingSystem.vue'
@@ -41,6 +42,15 @@ const routes = [
     path: '/admindashboard',
     name: 'AdminDashboard',
     component: AdminDashboard,
+    meta: {
+      requiresAuth: true,
+      is_admin: true
+    }
+  },
+  {
+    path: '/documentmanagement',
+    name: 'DocumentManagement',
+    component: DocumentManagement,
     meta: {
       requiresAuth: true,
       is_admin: true

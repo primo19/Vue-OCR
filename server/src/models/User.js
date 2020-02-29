@@ -26,15 +26,22 @@ const userSchema = mongoose.Schema({
         type: String
     },
     position: {
-        type: String,
-        default: "Instructor"
+        type: String
+    },
+    acadRank: {
+        type: String
     },
     totalScore: {
         type: Number,
         default: 0
     },
-    ptsToRank: {
-        type: Number
+    profilePic: {
+        type: String,
+        default: null
+    },
+    pds: {
+        type: String,
+        default: null
     },
     tokens: [{
         token: {
