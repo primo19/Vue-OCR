@@ -35,7 +35,7 @@
 
       <ul class="list-unstyled CTAs font-medium">
         <li>
-          <a href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a href data-toggle="modal" data-target="#logoutModal">Logout</a>
         </li>
       </ul>
     </nav>
@@ -90,18 +90,126 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="doc in documents" :key="doc._id" v-show="doc.college == deptSelect">
-              <td>{{doc.uploaderName}}</td>
-              <td>{{doc.college}}</td>
-              <td></td>
+            <tr
+              v-for="(doc, index) in documents"
+              :key="doc._id"
+              v-show="doc.uploader.college == deptSelect"
+            >
+              <td>{{doc.uploader.name}}</td>
+              <td>{{doc.uploader.college}}</td>
+              <td>{{doc.uploader.acadRank}}</td>
               <td>{{doc.typeOfDoc}}</td>
               <td>
-                <button type="button" class="btn btn-info mx-2">View</button>
+                <button
+                  type="button"
+                  class="btn btn-info mx-2"
+                  data-toggle="modal"
+                  data-target="#viewDocModal"
+                  @click="viewDocument(index, doc._id)"
+                >View</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <!-- View Document Modal -->
+      <div
+        class="modal fade"
+        id="viewDocModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="viewDocModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="viewDocModalTitle">Evaluate</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <img :src="document.mainDoc" alt="Document Image" height="520" width="760" />
+              </div>
+
+              <div
+                class="row align-items-center justify-content-center text-center mx-4 my-2"
+                style="border: 1px solid black"
+              >
+                <h4 class="col-12">Choose Action:</h4>
+                <div class="form-check col-6">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="docActionRadio"
+                    id="acceptRadio"
+                    value="accept"
+                    v-model="docAction"
+                    checked
+                  />
+                  <label class="form-check-label" for="acceptRadio">Accept</label>
+                </div>
+                <div class="form-check col-6">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="docActionRadio"
+                    id="rejectRadio"
+                    value="reject"
+                    v-model="docAction"
+                  />
+                  <label class="form-check-label" for="rejectRadio">Reject</label>
+                </div>
+              </div>
+
+              <div
+                class="row align-items-center justify-content-center text-center mx-4 my-2"
+                style="border: 1px solid black"
+                v-if="docAction == 'accept'"
+              >
+                <div class="form-group col-4">
+                  <label for="allocPoints">Allocated Points:</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="allocPoints"
+                    v-model="document.initialPoints"
+                  />
+                </div>
+                <div class="form-group col-4">
+                  <label for="note">Note:</label>
+                  <textarea class="form-control" id="note" rows="2" v-model="acceptNote" />
+                </div>
+              </div>
+
+              <div
+                class="row align-items-center justify-content-center text-center mx-4 my-2"
+                style="border: 1px solid black"
+                v-if="docAction == 'reject'"
+              >
+                <div class="form-group col-6">
+                  <label for="note">Note:</label>
+                  <textarea class="form-control" id="note" rows="2" v-model="rejectNote" />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                v-if="docAction == 'reject'"
+                @click="rejectDocument"
+              >Reject</button>
+              <button type="button" class="btn btn-success" v-if="docAction == 'accept'">Accept</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End View Document Modal -->
 
       <!-- Logout Modal -->
       <div
@@ -145,10 +253,16 @@ export default {
       deptSelect: "CCS",
       documents: [],
       document: {
+        index: "",
+        id: "",
         note: "",
-        finalPoints: ""
+        finalPoints: "",
+        initialPoints: ""
       },
-      users: []
+      acceptNote: "",
+      rejectNote: "",
+      users: [],
+      docAction: "accept"
     };
   },
 
@@ -169,6 +283,222 @@ export default {
         .then(response => {
           this.documents = response.data.docs;
           console.log(this.documents);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    viewDocument(index, docId) {
+      const uri = "http://localhost:3000/document";
+
+      this.$http
+        .post(uri, {
+          _id: docId
+        })
+        .then(res => {
+          this.document = res.data.doc;
+          this.document.index = index;
+          this.document.id = res.data.doc._id;
+          this.document.initialPoints = res.data.doc.initialScore;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    rejectDocument() {
+      const uri = "http://localhost:3000/reject/document/" + this.document.id;
+
+      if (this.docAction == "reject" && this.rejectNote != "") {
+        this.$http
+          .put(uri, {
+            status: "Rejected",
+            note: this.rejectNote
+          })
+          .then(() => {
+            this.$toasted.show("Document has been rejected", {
+              action: {
+                text: "close",
+                onClick: (e, toastObject) => {
+                  toastObject.goAway(0);
+                }
+              },
+              type: "success"
+            });
+          })
+          .catch(e => {
+            console.log(e);
+          })
+          .finally(() => {
+            $("#viewDocModal").modal("hide");
+            this.rejectNote = "";
+          });
+      } else {
+        this.$toasted.show("Please fill up the reject note", {
+          action: {
+            text: "close",
+            onClick: (e, toastObject) => {
+              toastObject.goAway(0);
+            }
+          },
+          type: "error"
+        });
+      }
+    },
+
+    acceptDocument() {
+      const uri = "http://localhost:3000/accept/document/" + this.document.id;
+
+      if (this.docAction == "accept" && this.acceptNote != "") {
+        this.$http
+          .put(uri, {
+            finalScore: parseInt(this.initialPoints),
+            note: this.acceptNote,
+            status: "Accepted",
+            uploader: {
+              totalScore:
+                this.document.uploader.totalScore + parseInt(this.initialPoints)
+            }
+          })
+          .then(() => {
+            this.updateUserPos();
+            this.$toasted.show("Document has been Accepted", {
+              action: {
+                text: "close",
+                onClick: (e, toastObject) => {
+                  toastObject.goAway(0);
+                }
+              },
+              type: "success"
+            });
+          })
+          .catch(e => {
+            console.log(e);
+          })
+          .finally(() => {
+            $("#viewDocModal").modal("hide");
+            this.acceptNote = "";
+          });
+      } else {
+        this.$toasted.show("Please fill up the accept note", {
+          action: {
+            text: "close",
+            onClick: (e, toastObject) => {
+              toastObject.goAway(0);
+            }
+          },
+          type: "error"
+        });
+      }
+    },
+
+    updateUserPos() {
+      const uri = "http://localhost:3000/user/position/" + this.document.id;
+      let pos = "";
+
+      if (this.document.uploader.totalScore <= 65) {
+        pos = "Instructor I";
+      } else if (
+        this.document.uploader.totalScore >= 66 ||
+        this.document.uploader.totalScore <= 76
+      ) {
+        pos = "Instructor II";
+      } else if (
+        this.document.uploader.totalScore >= 77 ||
+        this.document.uploader.totalScore <= 87
+      ) {
+        pos = "Instructor III";
+      } else if (
+        this.document.uploader.totalScore >= 88 ||
+        this.document.uploader.totalScore <= 96
+      ) {
+        pos = "Assistant Professor I";
+      } else if (
+        this.document.uploader.totalScore >= 97 ||
+        this.document.uploader.totalScore <= 105
+      ) {
+        pos = "Assistant Professor II";
+      } else if (
+        this.document.uploader.totalScore >= 106 ||
+        this.document.uploader.totalScore <= 114
+      ) {
+        pos = "Assistant Professor III";
+      } else if (
+        this.document.uploader.totalScore >= 115 ||
+        this.document.uploader.totalScore <= 123
+      ) {
+        pos = "Assistant Professor IV";
+      } else if (
+        this.document.uploader.totalScore >= 124 ||
+        this.document.uploader.totalScore <= 130
+      ) {
+        pos = "Associate Professor I";
+      } else if (
+        this.document.uploader.totalScore >= 131 ||
+        this.document.uploader.totalScore <= 137
+      ) {
+        pos = "Associate Professor II";
+      } else if (
+        this.document.uploader.totalScore >= 138 ||
+        this.document.uploader.totalScore <= 144
+      ) {
+        pos = "Associate Professor III";
+      } else if (
+        this.document.uploader.totalScore >= 145 ||
+        this.document.uploader.totalScore <= 151
+      ) {
+        pos = "Associate Professor IV";
+      } else if (
+        this.document.uploader.totalScore >= 152 ||
+        this.document.uploader.totalScore <= 158
+      ) {
+        pos = "Associate Professor V";
+      } else if (
+        this.document.uploader.totalScore >= 159 ||
+        this.document.uploader.totalScore <= 164
+      ) {
+        pos = "Professor I";
+      } else if (
+        this.document.uploader.totalScore >= 165 ||
+        this.document.uploader.totalScore <= 170
+      ) {
+        pos = "Professor II";
+      } else if (
+        this.document.uploader.totalScore >= 171 ||
+        this.document.uploader.totalScore <= 176
+      ) {
+        pos = "Professor III";
+      } else if (
+        this.document.uploader.totalScore >= 177 ||
+        this.document.uploader.totalScore <= 182
+      ) {
+        pos = "Professor IV";
+      } else if (
+        this.document.uploader.totalScore >= 183 ||
+        this.document.uploader.totalScore <= 188
+      ) {
+        pos = "Professor V";
+      } else if (
+        this.document.uploader.totalScore >= 189 ||
+        this.document.uploader.totalScore <= 194
+      ) {
+        pos = "Professor VI";
+      } else if (
+        this.document.uploader.totalScore >= 195 ||
+        this.document.uploader.totalScore <= 200
+      ) {
+        pos = "College/University Professor";
+      }
+
+      this.$http
+        .put(uri, {
+          uploader: {
+            acadRank: pos
+          }
+        })
+        .then(() => {
+          this.getDocuments();
         })
         .catch(e => {
           console.log(e);

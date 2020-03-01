@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Schema = mongoose.Schema
 
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
     employeeID: {
         type: String,
         required: true

@@ -98,7 +98,11 @@
               <td>{{prof.acadRank}}</td>
               <td>{{prof.totalScore}}</td>
               <td>
-                <button type="button" class="btn btn-info mx-2">View PDS</button>
+                <button
+                  type="button"
+                  class="btn btn-info mx-2"
+                  @click="downloadPDS(prof.pds)"
+                >Download PDS</button>
                 <button
                   type="button"
                   class="btn btn-success mx-2"
@@ -152,7 +156,27 @@
                 </div>
                 <div class="form-group">
                   <label for="acadRank">Academic Rank</label>
-                  <input type="text" class="form-control" id="acadRank" v-model="acadRank" required />
+                  <select class="form-control" id="acadRank" v-model="acadRank" required>
+                    <option selected>Instructor I</option>
+                    <option>Instructor II</option>
+                    <option>Instructor III</option>
+                    <option>Assistant Professor I</option>
+                    <option>Assistant Professor II</option>
+                    <option>Assistant Professor III</option>
+                    <option>Assistant Professor IV</option>
+                    <option>Associate Professor I</option>
+                    <option>Associate Professor II</option>
+                    <option>Associate Professor III</option>
+                    <option>Associate Professor IV</option>
+                    <option>Associate Professor V</option>
+                    <option>Professor I</option>
+                    <option>Professor II</option>
+                    <option>Professor III</option>
+                    <option>Professor IV</option>
+                    <option>Professor V</option>
+                    <option>Professor VI</option>
+                    <option>College/University Professor</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="selectCollege">Department</label>
@@ -323,7 +347,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="logoutModalTitle">Upload Profile Picture</h5>
+              <h5 class="modal-title" id="logoutModalTitle">Logout</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -347,7 +371,8 @@
 
 <script>
 import $ from "jquery";
-// import Download from "downloadjs";
+import XLSX from "xlsx";
+// import Tabulator from "tabulator-tables";
 export default {
   data() {
     return {
@@ -422,9 +447,18 @@ export default {
               type: "error"
             }
           );
+        })
+        .finally(() => {
+          $("#addUser").modal("hide");
+          this.name = "";
+          this.employeeno = "";
+          this.password = "";
+          this.isAdmin = "";
+          this.college = "";
+          this.acadRank = "";
+          this.position = "";
+          this.totalPoints = "";
         });
-
-      $("#addUser").modal("hide");
     },
 
     getAllUsers() {
@@ -530,6 +564,14 @@ export default {
           });
         });
       // alert(userID);
+    },
+
+    downloadPDS(userPDS) {
+      const wb = XLSX.read(userPDS, { type: "base64" });
+
+      XLSX.writeFile(wb, "pds");
+      // console.log(wb.SheetNames[0]);
+      // console.log(fileName);
     }
   },
 

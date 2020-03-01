@@ -3,13 +3,10 @@ const path = require('path')
 const User = require('../models/User')
 
 const documentSchema = mongoose.Schema({
-    uploaderID: String,
-    uploaderName: String,
-    uploaderRank: {
+    uploader: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    college: String,
     typeOfDoc: String,
     initialScore: Number,
     finalScore: {

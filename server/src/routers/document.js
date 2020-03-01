@@ -60,6 +60,7 @@ router.post('/upload', async (req, res) => {
 router.post('/upload/eq', async (req, res) => {
     try {
         const doc = new Document(req.body)
+        doc.populate('uploader').execPopulate()
         doc.save();
         res.status(201).send({ doc })
     } catch (e) {
@@ -90,6 +91,28 @@ router.post('/upload/pdah', async (req, res) => {
 
 })
 
+router.put('/reject/document/:id', async (req, res) => {
+    try {
+        Document.findByIdAndUpdate(req.params.id, req.body, (err, doc) => {
+            if (err) throw err;
+            res.status(201).send(doc)
+        })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.put('/accept/document/:id', async (req, res) => {
+    try {
+        Document.findByIdAndUpdate(req.params.id, req.body, (err, doc) => {
+            if (err) throw err;
+            res.status(201).send(doc)
+        })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
 router.post('/add/isbn', async (req, res) => {
     try {
         const doc = new Document(req.body)
@@ -102,7 +125,7 @@ router.post('/add/isbn', async (req, res) => {
 
 router.get('/documents', async (req, res) => {
     try {
-        const docs = await Document.find();
+        const docs = await Document.find().populate('uploader')
         res.status(201).send({ docs })
     } catch (e) {
         res.status(400).send(e)
@@ -113,6 +136,7 @@ router.post('/document', async (req, res) => {
     try {
         const doc = await Document.findOne({ _id: req.body })
         res.status(201).send({ doc })
+
     } catch (e) {
         res.status(400).send(e)
     }

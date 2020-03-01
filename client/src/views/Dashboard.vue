@@ -353,7 +353,7 @@
             <tr
               v-for="(docu, index) in documents"
               :key="docu._id"
-              v-show="docu.uploaderID == userData._id"
+              v-show="docu.uploader._id == currentUser._id"
             >
               <td>{{docu.mainDocName}}</td>
               <td>{{docu.initialScore}}</td>
@@ -1845,9 +1845,7 @@ export default {
 
       this.$http
         .post(uri, {
-          uploaderID: this.userData._id,
-          uploaderName: this.userData.name,
-          college: this.userData.college,
+          uploader: this.currentUser._id,
           typeOfDoc: this.eqFormType,
           initialScore: this.score,
           note: this.note,

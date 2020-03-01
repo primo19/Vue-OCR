@@ -11,11 +11,11 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
-    "downloadjs": "^1.4.7",
     "filepond": "^4.11.0",
     "filepond-plugin-file-encode": "^2.1.4",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
+    "tabulator-tables": "^4.5.3",
     "tesseract.js": "^2.0.2",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
@@ -23,7 +23,8 @@
     "vue-moment": "^4.1.0",
     "vue-router": "^3.1.5",
     "vue-toasted": "^1.1.27",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "xlsx": "^0.15.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",
