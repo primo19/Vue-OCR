@@ -114,7 +114,9 @@
                 <button
                   type="button"
                   class="btn btn-danger mx-2"
-                  @click="removeUser(index, prof._id)"
+                  data-toggle="modal"
+                  data-target="#removeUserModal"
+                  @click="deleteUser(index, prof._id)"
                 >Remove</button>
               </td>
             </tr>
@@ -336,6 +338,37 @@
       </div>
       <!-- End Edit User Modal -->
 
+      <!-- Remove Confirmation Modal  -->
+      <div
+        class="modal fade"
+        id="removeUserModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="removeUserModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="removeUserModalTitle">Remove User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form @submit.prevent="removeUser">
+              <div class="modal-body text-center">
+                <h3>Are you sure you want to remove this user?</h3>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Remove</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- End Remove Confirmation Modal -->
+
       <!-- Logout Modal -->
       <div
         class="modal fade"
@@ -435,6 +468,16 @@ export default {
             },
             type: "success"
           });
+
+          $("#addUserModal").modal("hide");
+          this.name = "";
+          this.employeeno = "";
+          this.password = "";
+          this.isAdmin = "";
+          this.college = "";
+          this.acadRank = "";
+          this.position = "";
+          this.totalPoints = "";
         })
         .catch(() => {
           this.$toasted.show(
@@ -449,17 +492,6 @@ export default {
               type: "error"
             }
           );
-        })
-        .finally(() => {
-          $("#addUser").modal("hide");
-          this.name = "";
-          this.employeeno = "";
-          this.password = "";
-          this.isAdmin = "";
-          this.college = "";
-          this.acadRank = "";
-          this.position = "";
-          this.totalPoints = "";
         });
     },
 
@@ -470,12 +502,12 @@ export default {
       });
     },
 
-    removeUser(index, userID) {
-      let uri = "http://localhost:3000/user/remove";
+    removeUser() {
+      let uri = "http://localhost:3000/user/remove/" + this.user.id;
       this.$http
-        .post(uri, { _id: userID })
+        .post(uri)
         .then(() => {
-          this.users.splice(index, 1);
+          this.users.splice(this.user.index, 1);
 
           this.$toasted.show("User has been deleted!", {
             action: {
@@ -486,6 +518,8 @@ export default {
             },
             type: "success"
           });
+
+          $("#removeUserModal").modal("hide");
         })
         .catch(() => {
           this.$toasted.show("An error occured while deleting the user", {
@@ -540,6 +574,22 @@ export default {
         });
 
       $("#editUserModal").modal("hide");
+    },
+
+    deleteUser(index, userID) {
+      let uri = "http://localhost:3000/user";
+      this.$http
+        .post(uri, { _id: userID })
+        .then(res => {
+          this.user.index = index;
+          this.user.id = res.data.user._id;
+        })
+        .catch(() => {
+          this.$toasted.show("An error occured getting the user", {
+            duration: 3000,
+            type: "error"
+          });
+        });
     },
 
     editUser(index, userID) {

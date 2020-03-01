@@ -75,11 +75,21 @@ router.post('/user', async (req, res) => {
     }
 })
 
-router.post('/user/remove', async (req, res) => {
+router.post('/user/:id', async (req, res) => {
+    // Get Single User by ID
     try {
-        User.findByIdAndDelete(req.body, (err, obj) => {
+        let user = await User.findById(req.params.id)
+        res.status(201).send(user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.post('/user/remove/:id', async (req, res) => {
+    try {
+        User.findByIdAndDelete(req.params.id, req.body, (err, obj) => {
             if (err) throw err;
-            res.status(201).send('Deleted Successfully')
+            res.status(201).send(obj)
         })
     } catch (e) {
         res.status(400).send(e)

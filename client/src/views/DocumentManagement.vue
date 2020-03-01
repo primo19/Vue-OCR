@@ -105,7 +105,7 @@
                   class="btn btn-info mx-2"
                   data-toggle="modal"
                   data-target="#viewDocModal"
-                  @click="viewDocument(index, doc._id)"
+                  @click="viewDocument(index, doc._id, doc.uploader._id)"
                 >View</button>
               </td>
             </tr>
@@ -267,6 +267,7 @@ export default {
       acceptNote: "",
       rejectNote: "",
       users: [],
+      user: {},
       docAction: "accept"
     };
   },
@@ -294,9 +295,9 @@ export default {
         });
     },
 
-    viewDocument(index, docId) {
+    viewDocument(index, docId, userID) {
       const uri = "http://localhost:3000/document";
-
+      this.getUser(userID);
       this.$http
         .post(uri, {
           _id: docId
@@ -306,6 +307,7 @@ export default {
           this.document.index = index;
           this.document.id = res.data.doc._id;
           this.document.initialPoints = res.data.doc.initialScore;
+          console.log(this.document);
         })
         .catch(e => {
           console.log(e);
@@ -354,153 +356,90 @@ export default {
 
     acceptDocument() {
       const uri = "http://localhost:3000/accept/document/" + this.document.id;
+      const uri2 = "http://localhost:3000/user/update/" + this.user._id;
 
-      if (this.docAction == "accept" && this.acceptNote != "") {
-        this.$http
-          .put(uri, {
-            finalScore: parseInt(this.initialPoints),
-            note: this.acceptNote,
-            status: "Accepted",
-            uploader: {
+      this.$http
+        .put(uri, {
+          finalScore: parseInt(this.document.initialPoints),
+          note: this.acceptNote,
+          status: "Accepted"
+        })
+        .then(() => {
+          this.$http
+            .put(uri2, {
               totalScore:
-                this.document.uploader.totalScore + parseInt(this.initialPoints)
-            }
-          })
-          .then(() => {
-            this.updateUserPos();
-            this.$toasted.show("Document has been Accepted", {
-              action: {
-                text: "close",
-                onClick: (e, toastObject) => {
-                  toastObject.goAway(0);
-                }
-              },
-              type: "success"
+                this.user.totalScore + parseInt(this.document.initialPoints)
+            })
+            .then(() => {
+              this.updateUserPos();
             });
-          })
-          .catch(e => {
-            console.log(e);
-          })
-          .finally(() => {
-            $("#viewDocModal").modal("hide");
-            this.acceptNote = "";
+
+          this.$toasted.show("Document has been Accepted", {
+            action: {
+              text: "close",
+              onClick: (e, toastObject) => {
+                toastObject.goAway(0);
+              }
+            },
+            type: "success"
           });
-      } else {
-        this.$toasted.show("Please fill up the accept note", {
-          action: {
-            text: "close",
-            onClick: (e, toastObject) => {
-              toastObject.goAway(0);
-            }
-          },
-          type: "error"
+        })
+        .catch(e => {
+          console.log(e);
+        })
+        .finally(() => {
+          $("#viewDocModal").modal("hide");
+          this.acceptNote = "";
         });
-      }
     },
 
     updateUserPos() {
-      const uri = "http://localhost:3000/user/position/" + this.document.id;
+      const uri = "http://localhost:3000/user/update/" + this.user._id;
       let pos = "";
 
-      if (this.document.uploader.totalScore <= 65) {
+      if (this.user.totalScore <= 65) {
         pos = "Instructor I";
-      } else if (
-        this.document.uploader.totalScore >= 66 ||
-        this.document.uploader.totalScore <= 76
-      ) {
+      } else if (this.user.totalScore >= 66 || this.user.totalScore <= 76) {
         pos = "Instructor II";
-      } else if (
-        this.document.uploader.totalScore >= 77 ||
-        this.document.uploader.totalScore <= 87
-      ) {
+      } else if (this.user.totalScore >= 77 || this.user.totalScore <= 87) {
         pos = "Instructor III";
-      } else if (
-        this.document.uploader.totalScore >= 88 ||
-        this.document.uploader.totalScore <= 96
-      ) {
+      } else if (this.user.totalScore >= 88 || this.user.totalScore <= 96) {
         pos = "Assistant Professor I";
-      } else if (
-        this.document.uploader.totalScore >= 97 ||
-        this.document.uploader.totalScore <= 105
-      ) {
+      } else if (this.user.totalScore >= 97 || this.user.totalScore <= 105) {
         pos = "Assistant Professor II";
-      } else if (
-        this.document.uploader.totalScore >= 106 ||
-        this.document.uploader.totalScore <= 114
-      ) {
+      } else if (this.user.totalScore >= 106 || this.user.totalScore <= 114) {
         pos = "Assistant Professor III";
-      } else if (
-        this.document.uploader.totalScore >= 115 ||
-        this.document.uploader.totalScore <= 123
-      ) {
+      } else if (this.user.totalScore >= 115 || this.user.totalScore <= 123) {
         pos = "Assistant Professor IV";
-      } else if (
-        this.document.uploader.totalScore >= 124 ||
-        this.document.uploader.totalScore <= 130
-      ) {
+      } else if (this.user.totalScore >= 124 || this.user.totalScore <= 130) {
         pos = "Associate Professor I";
-      } else if (
-        this.document.uploader.totalScore >= 131 ||
-        this.document.uploader.totalScore <= 137
-      ) {
+      } else if (this.user.totalScore >= 131 || this.user.totalScore <= 137) {
         pos = "Associate Professor II";
-      } else if (
-        this.document.uploader.totalScore >= 138 ||
-        this.document.uploader.totalScore <= 144
-      ) {
+      } else if (this.user.totalScore >= 138 || this.user.totalScore <= 144) {
         pos = "Associate Professor III";
-      } else if (
-        this.document.uploader.totalScore >= 145 ||
-        this.document.uploader.totalScore <= 151
-      ) {
+      } else if (this.user.totalScore >= 145 || this.user.totalScore <= 151) {
         pos = "Associate Professor IV";
-      } else if (
-        this.document.uploader.totalScore >= 152 ||
-        this.document.uploader.totalScore <= 158
-      ) {
+      } else if (this.user.totalScore >= 152 || this.user.totalScore <= 158) {
         pos = "Associate Professor V";
-      } else if (
-        this.document.uploader.totalScore >= 159 ||
-        this.document.uploader.totalScore <= 164
-      ) {
+      } else if (this.user.totalScore >= 159 || this.user.totalScore <= 164) {
         pos = "Professor I";
-      } else if (
-        this.document.uploader.totalScore >= 165 ||
-        this.document.uploader.totalScore <= 170
-      ) {
+      } else if (this.user.totalScore >= 165 || this.user.totalScore <= 170) {
         pos = "Professor II";
-      } else if (
-        this.document.uploader.totalScore >= 171 ||
-        this.document.uploader.totalScore <= 176
-      ) {
+      } else if (this.user.totalScore >= 171 || this.user.totalScore <= 176) {
         pos = "Professor III";
-      } else if (
-        this.document.uploader.totalScore >= 177 ||
-        this.document.uploader.totalScore <= 182
-      ) {
+      } else if (this.user.totalScore >= 177 || this.user.totalScore <= 182) {
         pos = "Professor IV";
-      } else if (
-        this.document.uploader.totalScore >= 183 ||
-        this.document.uploader.totalScore <= 188
-      ) {
+      } else if (this.user.totalScore >= 183 || this.user.totalScore <= 188) {
         pos = "Professor V";
-      } else if (
-        this.document.uploader.totalScore >= 189 ||
-        this.document.uploader.totalScore <= 194
-      ) {
+      } else if (this.user.totalScore >= 189 || this.user.totalScore <= 194) {
         pos = "Professor VI";
-      } else if (
-        this.document.uploader.totalScore >= 195 ||
-        this.document.uploader.totalScore <= 200
-      ) {
+      } else if (this.user.totalScore >= 195 || this.user.totalScore <= 200) {
         pos = "College/University Professor";
       }
 
       this.$http
         .put(uri, {
-          uploader: {
-            acadRank: pos
-          }
+          acadRank: pos
         })
         .then(() => {
           this.getDocuments();
@@ -515,6 +454,15 @@ export default {
       this.$http.get(uri).then(response => {
         this.users = response.data.users;
         console.log(this.users);
+      });
+    },
+
+    getUser(userID) {
+      let uri = "http://localhost:3000/user/" + userID;
+
+      this.$http.post(uri, { _id: userID }).then(res => {
+        this.user = res.data;
+        console.log(this.user);
       });
     }
   },

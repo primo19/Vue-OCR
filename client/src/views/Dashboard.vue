@@ -337,7 +337,12 @@
           data-target="#pbModal"
         >View Points Bracket</button>
 
-        <button type="button" class="btn btn-lg btn-info mx-3 text-dark">Summary Report</button>
+        <button
+          type="button"
+          class="btn btn-lg btn-info mx-3 text-dark"
+          data-toggle="modal"
+          data-target="#summaryModal"
+        >Summary Report</button>
 
         <table class="table table-striped my-3 mx-3 text-center">
           <thead>
@@ -358,11 +363,11 @@
               v-show="docu.uploader._id == currentUser._id"
             >
               <td>{{docu.mainDocName}}</td>
-              <td>{{docu.initialScore}}</td>
+              <td>{{getScore(docu.initialScore)}}</td>
               <td>{{docu.createdAt | moment("LL")}}</td>
               <td>{{docu.status}}</td>
               <td>{{docu.note}}</td>
-              <td>{{docu.finalScore}}</td>
+              <td>{{getScore(docu.finalScore)}}</td>
               <td>
                 <button
                   type="button"
@@ -436,6 +441,82 @@
         </div>
       </div>
       <!-- End PB Modal -->
+
+      <!-- Summary Report Modal -->
+      <div
+        class="modal fade"
+        id="summaryModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="summaryModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="summaryModalModalTitle">Summary Report</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-6">
+                  <div class="col">
+                    <h4>{{currentUser.name}}</h4>
+                  </div>
+                  <div class="col my-3">
+                    <h4>{{currentUser.acadRank}}</h4>
+                  </div>
+                  <div class="col my-3">
+                    <h4>{{currentUser.college}}</h4>
+                  </div>
+                  <div class="col my-3">
+                    <h4>{{currentUser.position}}</h4>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="col text-center">
+                    <h4>Current Points</h4>
+                  </div>
+                  <div class="col text-center">
+                    <h4>{{currentUser.totalScore}}</h4>
+                  </div>
+                </div>
+              </div>
+
+              <table class="table table-striped text-center">
+                <thead>
+                  <tr>
+                    <th scope="col" class="large-col">Achievements</th>
+                    <th scope="col" class="small-col">Initial Points</th>
+                    <th scope="col" class="medium-col">Date Submitted</th>
+                    <th scope="col" class="medium-col">Status</th>
+                    <th scope="col" class="large-col">Note</th>
+                    <th scope="col" class="small-col">Final Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="docu in documents"
+                    :key="docu._id"
+                    v-show="docu.uploader._id == currentUser._id"
+                  >
+                    <td>{{docu.mainDocName}}</td>
+                    <td>{{getScore(docu.initialScore)}}</td>
+                    <td>{{docu.createdAt | moment("LL")}}</td>
+                    <td>{{docu.status}}</td>
+                    <td>{{docu.note}}</td>
+                    <td>{{getScore(docu.finalScore)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Summary Report Modal -->
 
       <!-- Educational Qualification Modal -->
       <div
@@ -1857,6 +1938,7 @@ export default {
         })
         .then(response => {
           this.documents.push(response.data.doc);
+          this.getDocuments();
           this.$toasted.show("Document Uploaded Successfully", {
             action: {
               text: "close",
@@ -1958,6 +2040,7 @@ export default {
           })
           .then(res => {
             this.documents.push(res.data.doc);
+            this.getDocuments();
             this.$toasted.show("Document Uploaded Successfully", {
               action: {
                 text: "close",
@@ -2189,6 +2272,7 @@ export default {
           })
           .then(res => {
             this.documents.push(res.data.doc);
+            this.getDocuments();
             this.$toasted.show("Document Uploaded Successfully", {
               action: {
                 text: "close",
@@ -2423,6 +2507,10 @@ export default {
       ) {
         this.userPosition = "Assistant Professor I";
       }
+    },
+
+    getScore(val) {
+      return val.toFixed(2);
     }
   },
 
