@@ -246,6 +246,8 @@
             class="rounded-circle"
             height="120"
             width="120"
+            data-toggle="modal"
+            data-target="#profilePicModal"
             v-if="currentUser.profilePic == null"
           />
           <img
@@ -1905,22 +1907,22 @@ export default {
       } else if (this.serviceCat == "FPTE") {
         if (this.FPTE.position == "manager") {
           this.elsScore =
-            parseInt(this.FPTE.years) * this.scores[4].mod[0].score;
+            parseInt(this.FPTE.years) * this.scores[4].fpte[0].score;
         } else if (this.FPTE.position == "supervisor") {
           this.elsScore =
-            parseInt(this.FPTE.years) * this.scores[4].mod[1].score;
+            parseInt(this.FPTE.years) * this.scores[4].fpte[1].score;
         } else if (this.FPTE.position == "ranknfile") {
           this.elsScore =
-            parseInt(this.FPTE.years) * this.scores[4].mod[2].score;
+            parseInt(this.FPTE.years) * this.scores[4].fpte[2].score;
         }
         this.serviceCat = "Full-time Professional & Technical Experience";
       } else if (this.serviceCat == "EPPI") {
         if (this.EPPI.position == "coop") {
           this.elsScore =
-            parseInt(this.EPPI.years) * this.scores[5].mod[0].score;
+            parseInt(this.EPPI.years) * this.scores[5].eppi[0].score;
         } else if (this.EPPI.position == "basic") {
           this.elsScore =
-            parseInt(this.EPPI.years) * this.scores[5].mod[1].score;
+            parseInt(this.EPPI.years) * this.scores[5].eppi[1].score;
         }
         this.serviceCat = "Experience in the Public & Private Institution";
       }
@@ -1946,9 +1948,7 @@ export default {
       ) {
         this.$http
           .post(uri, {
-            uploaderID: this.userData._id,
-            uploaderName: this.userData.name,
-            college: this.userData.college,
+            uploader: this.currentUser._id,
             typeOfDoc: this.serviceCat,
             initialScore: this.elsScore,
             note: this.note,
@@ -2179,9 +2179,7 @@ export default {
       } else {
         this.$http
           .post(uri, {
-            uploaderID: this.userData._id,
-            uploaderName: this.userData.name,
-            college: this.userData.college,
+            uploader: this.currentUser._id,
             typeOfDoc: this.serviceFld,
             initialScore: this.pdahScore,
             note: this.note,

@@ -204,7 +204,12 @@
                 v-if="docAction == 'reject'"
                 @click="rejectDocument"
               >Reject</button>
-              <button type="button" class="btn btn-success" v-if="docAction == 'accept'">Accept</button>
+              <button
+                type="button"
+                class="btn btn-success"
+                v-if="docAction == 'accept'"
+                @click="acceptDocument"
+              >Accept</button>
             </div>
           </div>
         </div>

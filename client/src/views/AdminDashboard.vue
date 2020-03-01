@@ -101,6 +101,7 @@
                 <button
                   type="button"
                   class="btn btn-info mx-2"
+                  id="pdsDL"
                   @click="downloadPDS(prof.pds)"
                 >Download PDS</button>
                 <button
@@ -371,7 +372,8 @@
 
 <script>
 import $ from "jquery";
-import XLSX from "xlsx";
+import download from "downloadjs";
+// import XLSX from "xlsx";
 // import Tabulator from "tabulator-tables";
 export default {
   data() {
@@ -567,11 +569,14 @@ export default {
     },
 
     downloadPDS(userPDS) {
-      const wb = XLSX.read(userPDS, { type: "base64" });
+      // const wb = XLSX.read(userPDS, { type: "base64" });
 
-      XLSX.writeFile(wb, "pds");
+      // XLSX.writeFile(wb, "pds");
       // console.log(wb.SheetNames[0]);
       // console.log(fileName);
+
+      // download(userPDS);
+      download(userPDS, "pds.csv", "text/csv");
     }
   },
 
