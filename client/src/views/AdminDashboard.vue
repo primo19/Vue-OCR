@@ -386,15 +386,13 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form @submit.prevent="uploadProfilePic">
-              <div class="modal-body text-center">
-                <h3>Are you sure you want to logout?</h3>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger" @click="logout">Logout</button>
-              </div>
-            </form>
+            <div class="modal-body text-center">
+              <h3>Are you sure you want to logout?</h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-danger" @click="logout">Logout</button>
+            </div>
           </div>
         </div>
       </div>

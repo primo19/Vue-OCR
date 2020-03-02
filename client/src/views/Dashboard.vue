@@ -406,9 +406,11 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button
-                  type="submit"
+                  type="button"
                   class="btn btn-info"
                   v-show="document.status == 'Rejected'"
+                  data-toggle="modal"
+                  data-target="#reuploadModal"
                 >Re-Upload</button>
               </div>
             </form>
@@ -1498,6 +1500,44 @@
       </div>
       <!-- End PDS Modal -->
 
+      <!-- Start Reuploading Document Modal -->
+      <div
+        class="modal fade"
+        id="reuploadModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="reuploadModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="reuploadModalTitle">Re-Upload Image Document</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form @submit.prevent="updateDocument">
+              <div class="modal-body">
+                <file-pond
+                  name="file"
+                  ref="pondRE"
+                  class-name="my-pond"
+                  label-idle="Drop Image File Here..."
+                  v-on:addfile="selectRE"
+                  aria-required="true"
+                />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-info">Re-Upload</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- End Reuploading Document Modal -->
+
       <!-- Start Account Settings Modal -->
       <div
         class="modal fade"
@@ -1738,6 +1778,7 @@ export default {
         exmType: "exam1"
       },
 
+      // For Uploading Files
       pdsFile: "",
       dpFile: "",
       acadDegreeFile: "",
@@ -1745,7 +1786,10 @@ export default {
       pdahFile: "",
       pdahImage: "",
 
-      // For Clearing File
+      // For Reuploading Files
+      reDocFile: "",
+
+      // For Clearing Files
       adFileClear: "",
       srFileClear: "",
       pdahFileClear: "",
@@ -1787,6 +1831,12 @@ export default {
     selectDP() {
       this.dpFile = this.$refs.pondDP.getFile();
       console.log(this.dpFile);
+    },
+
+    // Re-Uploading
+    selectRE() {
+      this.reDocFile = this.$refs.pondRE.getFile();
+      console.log(this.reDocFile);
     },
 
     recognize: async function() {
@@ -1936,8 +1986,8 @@ export default {
           mainDoc: this.acadDegreeFile.getFileEncodeDataURL(),
           mainDocType: this.acadDegreeFile.fileType
         })
-        .then(response => {
-          this.documents.push(response.data.doc);
+        .then(() => {
+          // this.documents.push(response.data.doc);
           this.getDocuments();
           this.$toasted.show("Document Uploaded Successfully", {
             action: {
@@ -2038,8 +2088,8 @@ export default {
             mainDoc: this.servRecFile.getFileEncodeDataURL(),
             mainDocType: this.servRecFile.fileType
           })
-          .then(res => {
-            this.documents.push(res.data.doc);
+          .then(() => {
+            // this.documents.push(res.data.doc);
             this.getDocuments();
             this.$toasted.show("Document Uploaded Successfully", {
               action: {
@@ -2270,8 +2320,8 @@ export default {
             mainDoc: this.pdahFile.getFileEncodeDataURL(),
             mainDocType: this.pdahFile.fileType
           })
-          .then(res => {
-            this.documents.push(res.data.doc);
+          .then(() => {
+            // this.documents.push(res.data.doc);
             this.getDocuments();
             this.$toasted.show("Document Uploaded Successfully", {
               action: {
@@ -2450,6 +2500,33 @@ export default {
           this.document.docImage = res.data.doc.mainDoc;
           this.document.status = res.data.doc.status;
           console.log(this.document);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    updateDocument() {
+      const uri = "http://localhost:3000/update/document/" + this.document.id;
+
+      this.$http
+        .put(uri, {
+          mainDoc: this.reDocFile.getFileEncodeDataURL()
+        })
+        .then(() => {
+          this.getDocuments();
+          this.$toasted.show("Document Re-Uploaded Successfully!", {
+            action: {
+              text: "close",
+              onClick: (e, toastObject) => {
+                toastObject.goAway(0);
+              }
+            },
+            type: "success"
+          });
+
+          $("#reuploadModal").modal("hide");
+          $("#docuModal").modal("hide");
         })
         .catch(e => {
           console.log(e);

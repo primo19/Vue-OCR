@@ -113,6 +113,17 @@ router.put('/accept/document/:id', async (req, res) => {
     }
 })
 
+router.put('/update/document/:id', async (req, res) => {
+    try {
+        Document.findByIdAndUpdate(req.params.id, req.body, (err, doc) => {
+            if (err) throw err;
+            res.status(201).send(doc)
+        })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
 router.post('/add/isbn', async (req, res) => {
     try {
         const doc = new Document(req.body)

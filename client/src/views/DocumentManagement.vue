@@ -57,7 +57,7 @@
           type="button"
           class="btn btn-info btn-lg text-dark"
           data-toggle="modal"
-          data-target="#pointSystemModal"
+          data-target="#scoringModal"
         >
           <strong>Pointing System</strong>
         </button>
@@ -112,6 +112,442 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Scoring Criteria Modal -->
+      <div
+        class="modal fade"
+        id="scoringModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="scoringModalTitle"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered modal-xl"
+          role="document"
+          style="max-width: 1249px !important"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scoringModalTitle">Pointing System</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <h3
+                    class="mb-0 text-dark text-center"
+                    style="width: max-content"
+                  >Academic Experience</h3>
+                  <tr>
+                    <th scope="col">Document Category</th>
+                    <th scope="col">Points Criteria</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Diploma 1 -->
+                  <tr>
+                    <td>Diploma</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Document Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[0].diploma" :key="degreeScore._id">
+                          <td>{{degreeScore.dipType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p
+                    class="mt-3 mb-0"
+                    style="width: max-content"
+                  >Additional Equivalent degree earned related to the present position</p>
+                  <!-- Diploma 2 -->
+                  <tr>
+                    <td>Diploma</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Document Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[1].diplPresent" :key="degreeScore._id">
+                          <td>{{degreeScore.diplPresType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">Additional Credits Earned (maximum of 10pts)</p>
+                  <!-- TOR -->
+                  <tr>
+                    <td>TOR</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Description</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{scores[2].tor.desc}}</td>
+                          <td>{{scores[2].tor.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <h3
+                    class="mt-3 mb-0 text-dark text-center"
+                    style="width: max-content"
+                  >Experience and Length of Service</h3>
+                  <!-- ELS -->
+                  <tr>
+                    <td>Service Record</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Description</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[3].sr" :key="degreeScore._id">
+                          <td>{{degreeScore.desc}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">For every year of full-time administrative experience as:</p>
+                  <!-- MOD -->
+                  <tr>
+                    <td>Memorandum of Designation</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Position</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[18].mod" :key="degreeScore._id">
+                          <td>{{degreeScore.modPos}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p
+                    class="mt-3 mb-0"
+                    style="width: max-content"
+                  >For every year of relevant full-time professional and technical experience:</p>
+                  <!-- FPTE -->
+                  <tr>
+                    <td>Full-time Professional & Technical Experience</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Position</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[4].fpte" :key="degreeScore._id">
+                          <td>{{degreeScore.fptePos}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p
+                    class="mt-3 mb-0"
+                    style="width: max-content"
+                  >For every year of experience in the public and private institution as:</p>
+                  <!-- EPPI -->
+                  <tr>
+                    <td>Experience in the Public & Private Institution</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Position</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[5].eppi" :key="degreeScore._id">
+                          <td>{{degreeScore.eppiPos}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <h3
+                    class="mt-3 mb-0"
+                    style="width: max-content"
+                  >Professional Development, Achievement and Honors</h3>
+                  <!-- PDAH -->
+                  <p
+                    class="mt-3 mb-0"
+                    style="width: max-content"
+                  >Innovations, patented inventions, publications and other creative works (Maximum of 30 pts.)</p>
+                  <tr>
+                    <td>Certificate of Patent</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Description</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{scores[6].cop.desc}}</td>
+                          <td>{{scores[6].cop.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+                  <!-- ISBN -->
+                  <tr>
+                    <td>ISBN</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Description</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{scores[8].isbn.desc}}</td>
+                          <td>{{scores[8].isbn.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p
+                    class="mt-3 mb-0"
+                  >Expert services, training and active participation in professional/technical activities (maximum of 30 pts.)</p>
+                  <!-- COT -->
+                  <tr>
+                    <td>Certificate of Training</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[10].cot" :key="degreeScore._id">
+                          <td>{{degreeScore.cotType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">For participation in conferences, seminars, workshops</p>
+                  <!-- COP -->
+                  <tr>
+                    <td>Certificate of Attendance or Participation</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[11].cap" :key="degreeScore._id">
+                          <td>{{degreeScore.capType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">Expert Service Rendered</p>
+                  <!-- ESR -->
+                  <tr>
+                    <td>Expert Service Rendered</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[12].expServ" :key="degreeScore._id">
+                          <td>{{degreeScore.expType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Scoring Criteria Modal -->
+
+      <!-- Edit Score Modal -->
+      <div
+        class="modal fade"
+        id="editScoreModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="editScoreModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editScoreModalTitle">Update Points</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <h3>Are you sure you want to logout?</h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-info">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Edit Score Modal -->
 
       <!-- View Document Modal -->
       <div
@@ -233,15 +669,13 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form @submit.prevent="uploadProfilePic">
-              <div class="modal-body text-center">
-                <h3>Are you sure you want to logout?</h3>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger" @click="logout">Logout</button>
-              </div>
-            </form>
+            <div class="modal-body text-center">
+              <h3>Are you sure you want to logout?</h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" @click="logout">Logout</button>
+            </div>
           </div>
         </div>
       </div>
@@ -268,7 +702,9 @@ export default {
       rejectNote: "",
       users: [],
       user: {},
-      docAction: "accept"
+      docAction: "accept",
+
+      scores: []
     };
   },
 
@@ -464,12 +900,27 @@ export default {
         this.user = res.data;
         console.log(this.user);
       });
+    },
+
+    getScores() {
+      let uri = "http://localhost:3000/scores";
+
+      this.$http
+        .get(uri)
+        .then(res => {
+          this.scores = res.data.scores;
+          console.log(this.scores);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
 
   mounted() {
     this.getDocuments();
     this.getAllUsers();
+    this.getScores();
   }
 };
 </script>
