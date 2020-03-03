@@ -135,6 +135,7 @@
               </button>
             </div>
             <div class="modal-body">
+              <!-- Scoring Criteria Table -->
               <table class="table">
                 <thead>
                   <h3
@@ -512,6 +513,155 @@
                       </tbody>
                     </td>
                   </tr>
+
+                  <p
+                    class="mt-3 mb-0"
+                  >Membership in professional organizations/ honor societies and honors received (maximum of 10 pts)</p>
+                  <!-- Membership -->
+                  <tr>
+                    <td>Membership / Honor</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[13].membership" :key="degreeScore._id">
+                          <td>{{degreeScore.membType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">Scholarship / Fellowship</p>
+                  <!-- Scholarship -->
+                  <tr>
+                    <td>Scholarship / Fellowship</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[14].scholarship" :key="degreeScore._id">
+                          <td>{{degreeScore.schoType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p
+                    class="mt-3 mb-0"
+                  >Awards of distinction received in recognition of achievement in relevant areas of specialization/profession</p>
+                  <!-- Awards -->
+                  <tr>
+                    <td>Awards</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[15].awards" :key="degreeScore._id">
+                          <td>{{degreeScore.awardType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">Community Outreach</p>
+                  <!-- Outreach -->
+                  <tr>
+                    <td>Community Outreach</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{scores[16].outreach.name}}</td>
+                          <td>{{scores[16].outreach.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
+
+                  <p class="mt-3 mb-0">Professional Examinations</p>
+                  <!-- Exams -->
+                  <tr>
+                    <td>Professional Examinations</td>
+                    <td>
+                      <thead>
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Equivalent Points</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="degreeScore in scores[17].exams" :key="degreeScore._id">
+                          <td>{{degreeScore.examType}}</td>
+                          <td>{{degreeScore.score}}</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-info mx-2"
+                              data-toggle="modal"
+                              data-target="#editScoreModal"
+                            >Edit</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -574,6 +724,7 @@
               <div
                 class="row align-items-center justify-content-center text-center mx-4 my-2"
                 style="border: 1px solid black"
+                v-if="document.status != 'Accepted' && document.status != 'Rejected'"
               >
                 <h4 class="col-12">Choose Action:</h4>
                 <div class="form-check col-6">
@@ -601,10 +752,15 @@
                 </div>
               </div>
 
+              <div class="text-center">
+                <h1 v-if="document.status == 'Accepted'" class="text-success">Accepted</h1>
+                <h1 v-if="document.status == 'Rejected'" class="text-danger">Rejected</h1>
+              </div>
+
               <div
                 class="row align-items-center justify-content-center text-center mx-4 my-2"
                 style="border: 1px solid black"
-                v-if="docAction == 'accept'"
+                v-if="docAction == 'accept' && document.status != 'Accepted' && document.status != 'Rejected'"
               >
                 <div class="form-group col-4">
                   <label for="allocPoints">Allocated Points:</label>
@@ -624,7 +780,7 @@
               <div
                 class="row align-items-center justify-content-center text-center mx-4 my-2"
                 style="border: 1px solid black"
-                v-if="docAction == 'reject'"
+                v-if="docAction == 'reject' && document.status != 'Rejected' && document.status != 'Accepted'"
               >
                 <div class="form-group col-6">
                   <label for="note">Note:</label>
@@ -637,13 +793,13 @@
               <button
                 type="button"
                 class="btn btn-danger"
-                v-if="docAction == 'reject'"
+                v-if="docAction == 'reject' && document.status == 'Pending'"
                 @click="rejectDocument"
               >Reject</button>
               <button
                 type="button"
                 class="btn btn-success"
-                v-if="docAction == 'accept'"
+                v-if="docAction == 'accept' && document.status == 'Pending'"
                 @click="acceptDocument"
               >Accept</button>
             </div>
@@ -704,7 +860,8 @@ export default {
       user: {},
       docAction: "accept",
 
-      scores: []
+      scores: [],
+      score: {}
     };
   },
 
@@ -915,6 +1072,10 @@ export default {
           console.log(e);
         });
     }
+
+    // editScore(index, scoreID) {
+    //   let uri = "http://localhost:3000/score";
+    // }
   },
 
   mounted() {

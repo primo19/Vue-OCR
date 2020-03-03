@@ -1026,9 +1026,15 @@
                           class="btn btn-info mx-2 mt-2 col-12"
                           data-toggle="modal"
                           data-target="#isbnModal"
-                          @click="recognize"
+                          @click="recognizeISBN"
                         >ISBN</button>
-                        <button type="button" class="btn btn-info mx-2 my-2 col-12">ISSN</button>
+                        <button
+                          type="button"
+                          class="btn btn-info mx-2 my-2 col-12"
+                          data-toggle="modal"
+                          data-target="#issnModal"
+                          @click="recognizeISSN"
+                        >ISSN</button>
                       </div>
                     </div>
                   </div>
@@ -1428,9 +1434,87 @@
                           id="isbnModalTitle"
                         >International Standard Book Number</h5>
                       </div>
-                      <div class="modal-body text-center">
-                        <h4>{{IPPC.bookT}}</h4>
-                        <div class="form-group">
+                      <form @submit.prevent="uploadISBN">
+                        <div class="modal-body text-center">
+                          <h4>Title:</h4>
+                          <h4>ISBN:</h4>
+                          <h4>Authors:</h4>
+                          <div class="form-group">
+                            <label for="authors">No. of Authors</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="authors"
+                              v-model="isbn.authors"
+                            />
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-info">submit</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- End ISBN Modal -->
+
+                <!-- ISSN Modal -->
+                <div
+                  class="modal fade"
+                  id="issnModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="issnModalTitle"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5
+                          class="modal-title"
+                          id="isbnModalTitle"
+                        >International Standard Serial Number</h5>
+                      </div>
+                      <form @submit.prevent="uploadISSN">
+                        <div class="modal-body text-center">
+                          <h4>Title: {{issn.title}}</h4>
+                          <h4>ISSN: {{issn.ISSN[0]}}</h4>
+                          <h4>Publisher: {{issn.publisher}}</h4>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="issnTypeRadios"
+                              id="intIssn"
+                              value="intIssn"
+                              v-model="ISSN"
+                              checked
+                            />
+                            <label class="form-check-label" for="intIssn">International</label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="issnTypeRadios"
+                              id="natIssn"
+                              value="natIssn"
+                              v-model="ISSN"
+                            />
+                            <label class="form-check-label" for="natIssn">National</label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="issnTypeRadios"
+                              id="locIssn"
+                              value="locIssn"
+                              v-model="ISSN"
+                            />
+                            <label class="form-check-label" for="locIssn">Local</label>
+                          </div>
+                          <!-- <div class="form-group">
                           <label for="authors">No. of Authors</label>
                           <input
                             type="text"
@@ -1438,14 +1522,16 @@
                             id="authors"
                             v-model="ISBN.authors"
                           />
+                          </div>-->
                         </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-info">submit</button>
-                      </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-info">submit</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
+                <!-- End ISBN Modal -->
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -1755,6 +1841,7 @@ export default {
       ISBN: {
         authors: ""
       },
+      ISSN: "intIssn",
       ESTP: {
         expt: "cot",
         exptType: "int"
@@ -1794,7 +1881,17 @@ export default {
       srFileClear: "",
       pdahFileClear: "",
       pdsFileClear: "",
-      dpFileClear: ""
+      dpFileClear: "",
+
+      // ISSN
+      issn: {
+        ISSN: []
+      },
+      // ISBN
+      isbn: {
+        authorNames: [],
+        authors: ""
+      }
     };
   },
 
@@ -1839,20 +1936,64 @@ export default {
       console.log(this.reDocFile);
     },
 
-    recognize: async function() {
+    recognizeISSN: async function() {
       const img = document.getElementById("pdahImage");
       await worker.load();
       await worker.loadLanguage("eng");
       await worker.initialize("eng");
-      await worker.setParameters({
-        tessedit_char_whitelist: "ISBN0123456789-"
-      });
       const {
         data: { text }
       } = await worker.recognize(img);
       this.IPPC.bookT = text;
       console.log(text);
-      await worker.terminate();
+
+      const str = text;
+      const rgx = /\d\d\d\d-\d\d\d\w/gim;
+      const match = rgx.exec(str);
+      console.log(match[0]);
+
+      // var config = {
+      //   headers: { "Access-Control-Allow-Origin": "*" }
+      // };
+
+      this.$http
+        .get("http://api.crossref.org/journals/" + match[0])
+        .then(res => {
+          this.issn = res.data.message;
+          this.issn.ISSN = res.data.message.ISSN;
+          console.log(this.issn);
+        });
+      // await worker.terminate();
+    },
+
+    recognizeISBN: async function() {
+      const img = document.getElementById("pdahImage");
+      await worker.load();
+      await worker.loadLanguage("eng");
+      await worker.initialize("eng");
+      const {
+        data: { text }
+      } = await worker.recognize(img);
+      this.IPPC.bookT = text;
+      console.log(text);
+
+      // const str = text;
+      // const rgx = /\d\d\d\d-\d\d\d\w/gim;
+      // const match = rgx.exec(str);
+      // console.log(match[0]);
+
+      // var config = {
+      //   headers: { "Access-Control-Allow-Origin": "*" }
+      // };
+
+      // this.$http
+      //   .get("http://api.crossref.org/journals/" + match[0])
+      //   .then(res => {
+      //     this.issn = res.data.message;
+      //     this.issn.ISSN = res.data.message.ISSN;
+      //     console.log(this.issn);
+      //   });
+      // await worker.terminate();
     },
 
     uploadADFile() {
@@ -2341,6 +2482,67 @@ export default {
           .catch(e => {
             console.log(e);
           });
+      }
+    },
+
+    uploadISSN() {
+      const uri = "http://localhost:3000/upload/pdah";
+
+      if (this.pdahFile != "") {
+        if (this.serviceFld == "innov" && this.IPPC.checkISBN == true) {
+          if (this.ISSN == "intIssn") {
+            this.pdahScore = this.scores[9].issn[0].score;
+          } else if (this.ISSN == "natIssn") {
+            this.pdahScore = this.scores[9].issn[1].score;
+          } else if (this.ISSN == "locIssn") {
+            this.pdahScore = this.scores[9].issn[2].score;
+          }
+
+          this.serviceFld = "Journal (ISSN)";
+
+          this.$http
+            .post(uri, {
+              uploader: this.currentUser._id,
+              typeOfDoc: this.serviceFld,
+              initialScore: this.pdahScore,
+              note: this.note,
+              mainDocName: this.pdahFile.filenameWithoutExtension,
+              mainDoc: this.pdahFile.getFileEncodeDataURL(),
+              mainDocType: this.pdahFile.fileType
+            })
+            .then(() => {
+              // this.documents.push(res.data.doc);
+              this.getDocuments();
+              this.$toasted.show("Document Uploaded Successfully", {
+                action: {
+                  text: "close",
+                  onClick: (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+                },
+                type: "success"
+              });
+
+              $("#PDAHModal").modal("hide");
+              $("#issnModal").modal("hide");
+              this.serviceCat = "innov";
+              this.pdahFile = "";
+              this.pdahFileClear = "";
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+      } else {
+        this.$toasted.show("Please select an file to upload", {
+          action: {
+            text: "close",
+            onClick: (e, toastObject) => {
+              toastObject.goAway(0);
+            }
+          },
+          type: "error"
+        });
       }
     },
 

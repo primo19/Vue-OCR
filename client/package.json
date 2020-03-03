@@ -16,6 +16,7 @@
     "filepond-plugin-file-encode": "^2.1.4",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
+    "rss-to-json": "^1.0.5",
     "tabulator-tables": "^4.5.3",
     "tesseract.js": "^2.0.2",
     "vue": "^2.6.11",
