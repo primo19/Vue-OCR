@@ -688,7 +688,10 @@
               </button>
             </div>
             <div class="modal-body text-center">
-              <h3>Are you sure you want to logout?</h3>
+              <div class="form-group">
+                <label for="scoreEdit">Score:</label>
+                <input type="number" id="scoreEdit" class="form-control" />
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>

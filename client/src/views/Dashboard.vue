@@ -1436,21 +1436,27 @@
                       </div>
                       <form @submit.prevent="uploadISBN">
                         <div class="modal-body text-center">
-                          <h4>Title:</h4>
-                          <h4>ISBN:</h4>
-                          <h4>Authors:</h4>
+                          <h4>Title: {{isbn.title}}</h4>
+                          <h4>ISBN: {{isbn.bookNumber}}</h4>
+                          <h4>
+                            Author/s:
+                            <li
+                              v-for="(authorName, index) in isbn.authorNames"
+                              :key="index"
+                            >{{authorName}}</li>
+                          </h4>
                           <div class="form-group">
-                            <label for="authors">No. of Authors</label>
+                            <label for="authors" class="mt-3">No. of Authors</label>
                             <input
                               type="number"
-                              class="form-control"
+                              class="form-control text-center"
                               id="authors"
-                              v-model="isbn.authors"
+                              v-model="isbn.authorsNumber"
                             />
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="submit" class="btn btn-info">submit</button>
+                          <button type="submit" class="btn btn-info" v-show="isbn.title != null">submit</button>
                         </div>
                       </form>
                     </div>
@@ -1890,7 +1896,8 @@ export default {
       // ISBN
       isbn: {
         authorNames: [],
-        authors: ""
+        authorsNumber: "",
+        bookNumber: ""
       }
     };
   },
@@ -1977,23 +1984,41 @@ export default {
       this.IPPC.bookT = text;
       console.log(text);
 
-      // const str = text;
-      // const rgx = /\d\d\d\d-\d\d\d\w/gim;
-      // const match = rgx.exec(str);
-      // console.log(match[0]);
+      const str = text;
+      const rgx = /\d\d\d-\d-\d\d\d\d\d\d-\d\d-\d/gim;
+      const match = rgx.exec(str);
+      console.log(match[0]);
 
-      // var config = {
-      //   headers: { "Access-Control-Allow-Origin": "*" }
-      // };
+      if (match == null) {
+        this.$toasted.show(
+          "Cannot detect ISBN in the image. Please make sure you have the right format(123-X-XXXXXX-XX-X) and try again. ",
+          {
+            action: {
+              text: "close",
+              onClick: (e, toastObject) => {
+                toastObject.goAway(0);
+              }
+            },
+            type: "error"
+          }
+        );
+      }
 
-      // this.$http
-      //   .get("http://api.crossref.org/journals/" + match[0])
-      //   .then(res => {
-      //     this.issn = res.data.message;
-      //     this.issn.ISSN = res.data.message.ISSN;
-      //     console.log(this.issn);
-      //   });
-      // await worker.terminate();
+      this.$http
+        .get("https://www.googleapis.com/books/v1/volumes?q=" + match[0])
+        .then(res => {
+          this.isbn = res.data.items[0].volumeInfo;
+          this.isbn.authorsNumber = res.data.items[0].volumeInfo.authors.length;
+          this.isbn.authorNames = res.data.items[0].volumeInfo.authors;
+          this.isbn.bookNumber =
+            res.data.items[0].volumeInfo.industryIdentifiers[1].identifier;
+          console.log(this.isbn);
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+        });
+
+      worker.terminate();
     },
 
     uploadADFile() {
@@ -2525,6 +2550,61 @@ export default {
 
               $("#PDAHModal").modal("hide");
               $("#issnModal").modal("hide");
+              this.serviceCat = "innov";
+              this.pdahFile = "";
+              this.pdahFileClear = "";
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+      } else {
+        this.$toasted.show("Please select an file to upload", {
+          action: {
+            text: "close",
+            onClick: (e, toastObject) => {
+              toastObject.goAway(0);
+            }
+          },
+          type: "error"
+        });
+      }
+    },
+
+    uploadISBN() {
+      const uri = "http://localhost:3000/upload/pdah";
+
+      if (this.pdahFile != "") {
+        if (this.serviceFld == "innov" && this.IPPC.checkISBN == true) {
+          this.pdahScore = this.scores[8].isbn.score / this.isbn.authorsNumber;
+
+          this.serviceFld = "Published Book (ISBN)";
+
+          this.$http
+            .post(uri, {
+              uploader: this.currentUser._id,
+              typeOfDoc: this.serviceFld,
+              initialScore: this.pdahScore,
+              note: this.note,
+              mainDocName: this.pdahFile.filenameWithoutExtension,
+              mainDoc: this.pdahFile.getFileEncodeDataURL(),
+              mainDocType: this.pdahFile.fileType
+            })
+            .then(() => {
+              // this.documents.push(res.data.doc);
+              this.getDocuments();
+              this.$toasted.show("Document Uploaded Successfully", {
+                action: {
+                  text: "close",
+                  onClick: (e, toastObject) => {
+                    toastObject.goAway(0);
+                  }
+                },
+                type: "success"
+              });
+
+              $("#PDAHModal").modal("hide");
+              $("#isbnModal").modal("hide");
               this.serviceCat = "innov";
               this.pdahFile = "";
               this.pdahFileClear = "";
