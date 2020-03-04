@@ -26,7 +26,7 @@ router.put('/score/update/:id', async (req, res) => {
 
 router.post('/score', async (req, res) => {
     try {
-        let score = await Score.findOne({ _id: req.body })
+        let score = await Score.findOne({ _id: req.body }, score[req.body])
         res.status(201).send({ score })
     } catch (e) {
         res.status(400).send(e)

@@ -160,7 +160,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="degreeScore in scores[0].diploma" :key="degreeScore._id">
+                        <tr v-for="(degreeScore, index) in scores[0].diploma" :key="index">
                           <td>{{degreeScore.dipType}}</td>
                           <td>{{degreeScore.score}}</td>
                           <td>
@@ -169,6 +169,7 @@
                               class="btn btn-info mx-2"
                               data-toggle="modal"
                               data-target="#editScoreModal"
+                              @click="editScore(degreeScore._id, index)"
                             >Edit</button>
                           </td>
                         </tr>
@@ -679,7 +680,7 @@
         aria-labelledby="editScoreModalTitle"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="editScoreModalTitle">Update Points</h5>
@@ -690,7 +691,7 @@
             <div class="modal-body text-center">
               <div class="form-group">
                 <label for="scoreEdit">Score:</label>
-                <input type="number" id="scoreEdit" class="form-control" />
+                <input type="number" id="scoreEdit" class="form-control text-center" />
               </div>
             </div>
             <div class="modal-footer">
@@ -864,7 +865,11 @@ export default {
       docAction: "accept",
 
       scores: [],
-      score: {}
+      score: {
+        index: "",
+        id: "",
+        newScore: ""
+      }
     };
   },
 
@@ -1074,11 +1079,21 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    }
+    },
 
-    // editScore(index, scoreID) {
-    //   let uri = "http://localhost:3000/score";
-    // }
+    editScore(scoreID, index) {
+      let uri = "http://localhost:3000/score";
+
+      this.$http.get(uri, { _id: scoreID }, index).then(res => {
+        // this.score.index = index;
+        // this.score.id = res.data.score._id;
+        // this.score.newScore = res.data.score
+        // this.score = res.data.score
+        console.log(res);
+      });
+
+      // console.log(scoreID);
+    }
   },
 
   mounted() {

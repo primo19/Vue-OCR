@@ -29,7 +29,7 @@
         </li>
 
         <li class="font-medium">
-          <a href="#">Statistics</a>
+          <a href data-toggle="modal" data-target="#chartsModal">Statistics</a>
         </li>
       </ul>
 
@@ -123,6 +123,34 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Charts Modal -->
+      <div
+        class="modal fade"
+        id="chartsModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="chartsModalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="chartsModalTitle">Statistics</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <canvas id="faculty-chart" height="500px"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Charts Modal -->
 
       <!-- Add User Modal -->
       <div
@@ -404,6 +432,8 @@
 <script>
 import $ from "jquery";
 import download from "downloadjs";
+import Chart from "chart.js";
+import facultyChartData from "../data/faculty-data.js";
 // import XLSX from "xlsx";
 // import Tabulator from "tabulator-tables";
 export default {
@@ -430,7 +460,24 @@ export default {
         totalPoints: "",
         acadRank: "",
         position: ""
-      }
+      },
+
+      facultyChartData: facultyChartData
+
+      // chardata: {
+      //   labels: ["COF", "CAS", "CCS", "CTE", "CHMT", "CFND", "CBMA", "CCJE"],
+      //   datasets: [
+      //     {
+      //       label: "COF",
+      //       backgroundColor: "#328da8",
+      //       data: [40, 20]
+      //     }
+      //   ]
+      // },
+      // options: {
+      //   responsive: true,
+      //   maintainAspectRatio: false
+      // }
     };
   },
   methods: {
@@ -625,11 +672,25 @@ export default {
 
       // download(userPDS);
       download(userPDS, "pds.csv", "text/csv");
+    },
+
+    createChart(chartId, chartData) {
+      const ctx = document.getElementById(chartId);
+      new Chart(ctx, {
+        type: chartData.type,
+        data: chartData.data,
+        options: chartData.options
+      });
     }
+
+    // showChart() {
+
+    // }
   },
 
   mounted() {
     this.getAllUsers();
+    this.createChart("faculty-chart", this.facultyChartData);
   }
 };
 </script>

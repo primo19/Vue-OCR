@@ -1772,7 +1772,7 @@ const worker = createWorker({
 });
 export default {
   components: {
-    // FilePond
+    FilePond
   },
   data() {
     return {
